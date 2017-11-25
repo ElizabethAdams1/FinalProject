@@ -20,9 +20,20 @@ namespace FinalProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        Search.wndSearch wndSearchForm;
+        
         public MainWindow()
         {
             InitializeComponent();
+            wndSearchForm = new Search.wndSearch();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            wndSearchForm.ShowDialog();
+            this.Show();
+
         }
     }
 }

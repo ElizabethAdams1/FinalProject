@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Search
 {
+    /// <summary>
+    /// The functions used on the search form
+    /// </summary>
     class clsSearchFunctions
     {
     }
