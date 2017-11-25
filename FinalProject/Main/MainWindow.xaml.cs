@@ -28,7 +28,7 @@ namespace FinalProject
             wndSearchForm = new Search.wndSearch();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void search_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
             wndSearchForm.ShowDialog();
