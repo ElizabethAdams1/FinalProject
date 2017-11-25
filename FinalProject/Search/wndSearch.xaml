@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinalProject.Search"
         mc:Ignorable="d"
-        Title="wndSearch" Height="401.625" Width="583">
+        Title="Search Invoices" Height="459.625" Width="661.839">
     <Grid>
-        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,23,0,0" VerticalAlignment="Top" Height="338" Width="260"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="406,23,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="406,76,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="406,127,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="button" Content="Cancel" HorizontalAlignment="Left" Margin="451,263,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="button1" Content="Select" HorizontalAlignment="Left" Margin="451,211,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="label" Content="Invoice Number" HorizontalAlignment="Left" Margin="300,32,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1" Content="Invoice Date" HorizontalAlignment="Left" Margin="309,76,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="Total Charge" HorizontalAlignment="Left" Margin="309,136,0,0" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dGInvoices" HorizontalAlignment="Left" Margin="31,23,0,0" VerticalAlignment="Top" Height="380" Width="333"/>
+        <ComboBox x:Name="cBNum" HorizontalAlignment="Left" Margin="496,31,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cBNum_SelectionChanged"/>
+        <ComboBox x:Name="cBDate" HorizontalAlignment="Left" Margin="496,84,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cBDate_SelectionChanged"/>
+        <ComboBox x:Name="cBCharge" HorizontalAlignment="Left" Margin="496,144,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cBCharge_SelectionChanged"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="541,267,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Margin="541,215,0,0" VerticalAlignment="Top" Width="75" Click="btnSelect_Click"/>
+        <Label x:Name="labelNum" Content="Invoice Number:" HorizontalAlignment="Left" Margin="381,27,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelDate" Content="Invoice Date:" HorizontalAlignment="Left" Margin="399,80,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelCharge" Content="Total Charge:" HorizontalAlignment="Left" Margin="399,140,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
