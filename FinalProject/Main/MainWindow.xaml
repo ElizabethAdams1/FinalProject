@@ -10,8 +10,10 @@
         <Button x:Name="btnAddInvoice" Content="Add Invoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="157,88,0,0"/>
         <Menu x:Name="mnSeachEdit" HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="106" >        
             <MenuItem Header="_Menu">
-            <MenuItem Header="Search"/>
-            <MenuItem Header="Edit"/>
+                <MenuItem Header="Search"
+                x:Name="Search" Click="search_Click">
+                </MenuItem>
+                <MenuItem Header="Edit"/>
                 </MenuItem>
         </Menu>
         <Label x:Name="lblInvoiceNum" Content="Invoice Number" HorizontalAlignment="Left" Margin="12,130,0,0" VerticalAlignment="Top"/>
