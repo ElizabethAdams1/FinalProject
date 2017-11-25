@@ -55,21 +55,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD
     <Compile Include="clsDataAccess.cs" />
     <Compile Include="Search\clsSearchFunctions.cs" />
     <Compile Include="Search\clsSearchSQL.cs" />
     <Compile Include="Search\wndSearch.xaml.cs">
       <DependentUpon>wndSearch.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-=======
+    
     <Page Include="Items\EditPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Main\MainWindow.xaml">
->>>>>>> master
+
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
