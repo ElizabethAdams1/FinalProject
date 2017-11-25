@@ -1,0 +1,32 @@
+﻿<Window x:Class="FinalProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinalProject"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="534.481" Width="684.002">
+    <Grid>
+        <Button x:Name="btnAddInvoice" Content="Add Invoice" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="157,88,0,0"/>
+        <Menu x:Name="mnSeachEdit" HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="106" >        
+            <MenuItem Header="_Menu">
+            <MenuItem Header="Search"/>
+            <MenuItem Header="Edit"/>
+                </MenuItem>
+        </Menu>
+        <Label x:Name="lblInvoiceNum" Content="Invoice Number" HorizontalAlignment="Left" Margin="12,130,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbInvNum" HorizontalAlignment="Left" Height="23" Margin="112,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" Text="TBD"/>
+        <Label x:Name="lblInvoiceDate" Content="Invoice Number" HorizontalAlignment="Left" Margin="12,173,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbInvDate" HorizontalAlignment="Left" Height="23" Margin="112,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblSeectItems" Content="Select Item to Add" HorizontalAlignment="Left" Margin="12,221,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmbItems" HorizontalAlignment="Left" Margin="30,252,0,0" VerticalAlignment="Top" Width="167"/>
+        <DataGrid x:Name="dgInvoiceItems" HorizontalAlignment="Left" Margin="343,37,0,0" VerticalAlignment="Top" Height="260" Width="312" IsManipulationEnabled="True"/>
+        <TextBox x:Name="txbItmeCost" HorizontalAlignment="Left" Height="23" Margin="120,290,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="77" IsReadOnly="True"/>
+        <Label x:Name="lblIemCost" Content="Item Cost" HorizontalAlignment="Left" Margin="30,290,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAddItem" Content="Add Item to Invoice" HorizontalAlignment="Left" Margin="52,328,0,0" VerticalAlignment="Top" Width="145"/>
+        <Label x:Name="lblInvoiceTotal" Content="Invoice Total:" HorizontalAlignment="Left" Margin="343,347,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbInvTotal" HorizontalAlignment="Left" Height="23" Margin="448,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnADelItem" Content="Delete Item from Invoice" HorizontalAlignment="Left" Margin="52,358,0,0" VerticalAlignment="Top" Width="145" RenderTransformOrigin="0.476,3.31"/>
+
+    </Grid>
+</Window>
