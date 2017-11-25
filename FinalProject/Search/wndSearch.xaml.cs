@@ -91,6 +91,7 @@ namespace FinalProject.Search
             //the selected invoice id needs to be set to a variable in the search window,
             //the main window will access this data via the property SelectedId,
             //and the search window will close and the main window will open
+            this.Hide();
         }
         /// <summary>
         /// when the cancel button is selected
@@ -102,6 +103,15 @@ namespace FinalProject.Search
             //closes the search window and opens the main window
             //should not perform any of the same actions select would, setting selectedId, etc.
             this.Hide();
+        }
+        /// <summary>
+        /// When the Clear Selection button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clear_Click(object sender, RoutedEventArgs e)
+        {
+            //clears all selections on dropdowns, and set page to default
         }
     }
 }

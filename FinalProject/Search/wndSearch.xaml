@@ -11,11 +11,12 @@
         <ComboBox x:Name="cBNum" HorizontalAlignment="Left" Margin="496,31,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cBNum_SelectionChanged"/>
         <ComboBox x:Name="cBDate" HorizontalAlignment="Left" Margin="496,84,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cBDate_SelectionChanged"/>
         <ComboBox x:Name="cBCharge" HorizontalAlignment="Left" Margin="496,144,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cBCharge_SelectionChanged"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="541,267,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
-        <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Margin="541,215,0,0" VerticalAlignment="Top" Width="75" Click="btnSelect_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="541,349,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Margin="541,288,0,0" VerticalAlignment="Top" Width="75" Click="btnSelect_Click"/>
         <Label x:Name="labelNum" Content="Invoice Number:" HorizontalAlignment="Left" Margin="381,27,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelDate" Content="Invoice Date:" HorizontalAlignment="Left" Margin="399,80,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelCharge" Content="Total Charge:" HorizontalAlignment="Left" Margin="399,140,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="clear" Content="Clear Selection" HorizontalAlignment="Left" Margin="496,204,0,0" VerticalAlignment="Top" Width="120" Click="clear_Click"/>
 
     </Grid>
 </Window>
