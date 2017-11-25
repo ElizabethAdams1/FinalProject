@@ -7,11 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-<<<<<<< HEAD:FinalProject/MainWindow.xaml
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="33,39,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-=======
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="25" Margin="399,48,0,0" VerticalAlignment="Top" Width="89" Click="button_Click"/>
->>>>>>> master:FinalProject/Main/MainWindow.xaml.bak
-
+        
     </Grid>
 </Window>
