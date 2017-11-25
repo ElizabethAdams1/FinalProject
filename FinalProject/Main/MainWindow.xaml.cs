@@ -24,5 +24,12 @@ namespace FinalProject
         {
             InitializeComponent();
         }
+
+        private void btnAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            EditPage ep = new EditPage();
+            ep.Show();
+            this.Close();
+        }
     }
 }
