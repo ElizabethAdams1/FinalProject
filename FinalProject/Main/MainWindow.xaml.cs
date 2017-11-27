@@ -35,5 +35,12 @@ namespace FinalProject
             this.Show();
 
         }
+
+        private void edit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            EditPage ep = new EditPage();
+            ep.Show();
+        }
     }
 }
