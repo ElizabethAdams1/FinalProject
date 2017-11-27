@@ -36,11 +36,11 @@ namespace FinalProject
 
         }
 
-        private void btnAddItem_Click(object sender, RoutedEventArgs e)
+        private void edit_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             EditPage ep = new EditPage();
             ep.Show();
-            this.Close();
         }
     }
 }
