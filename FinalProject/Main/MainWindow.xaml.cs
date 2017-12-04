@@ -42,5 +42,10 @@ namespace FinalProject
             EditPage ep = new EditPage();
             ep.Show();
         }
+
+        private void btnAddInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
