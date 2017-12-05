@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,16 +14,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.OleDb;
+using FinalProject.Main;
+using FinalProject.DataClasses;
 
 namespace FinalProject
 {
+    //Flights flights = new Flights(); // instantiates Flights
+    //Passengers passenger = new Passengers(); //instantiates Passengers
+    //FlightPassengers flightPass = new FlightPassengers();
+
+   
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        Search.wndSearch wndSearchForm;
 
+        Search.wndSearch wndSearchForm;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +45,13 @@ namespace FinalProject
             wndSearchForm.ShowDialog();
             this.Show();
 
+        }
+
+        private void edit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            EditPage ep = new EditPage();
+            ep.Show();
         }
 
         private void btnEditInvoice_Click(object sender, RoutedEventArgs e)
@@ -55,6 +73,36 @@ namespace FinalProject
         private void btnAddInvoice_Click(object sender, RoutedEventArgs e)
         {
             //this will add a row to the invoices table using the InvoiceDate from txbInvDate, the TotalCharge from txbInvTotal by calling the addInvoice function in clsMainSQL
+            clsMainFunctions businessLogic = new clsMainFunctions();
+            double totalCost;
+            //string date = txbInvDate.ToString();
+            DateTime invoiceDate;
+
+            if (double.TryParse(txbInvTotal.Text, out totalCost))
+            {
+                if(DateTime.TryParse(txbInvDate.Text, out invoiceDate))
+                {
+                   // invoiceDate = Convert.ToDateTime(date);
+                    InvoicesData invoice = new InvoicesData(-1, invoiceDate, totalCost);
+                    businessLogic.AddInvoice(totalCost, invoiceDate);
+                    MessageBox.Show("Invoice has been saved.");
+                }
+            }
+        }
+
+        private void btnDeleteInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            clsMainFunctions businessLogic = new clsMainFunctions();
+            int invoiceNum;
+            if (int.TryParse(txbInvNum.Text, out invoiceNum))
+            {
+                businessLogic.DeleteInvoice(invoiceNum);
+                MessageBox.Show("Invoice " + invoiceNum + " has been deleted.");
+            }else
+            {
+                MessageBox.Show("invalid invoice number");
+            }
+
         }
 
         //cmbItems will be populated with Inventory data through allInventoryItems function in clsMainSQL
