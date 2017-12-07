@@ -23,20 +23,34 @@ namespace FinalProject
         public EditPage()
         {
             InitializeComponent();
-            AutoFillDataGrid();
+            populateDataGrid(); ;
         }
 
-        private void AutoFillDataGrid()
+        private void populateDataGrid()
+        {
+            grdItems.ItemsSource = AutoFillDataGrid();
+            grdItems.AutoGenerateColumns = true;
+            grdItems.ColumnWidth = 100;
+            grdItems.Background = new SolidColorBrush(Colors.LightGray);
+            grdItems.AlternatingRowBackground = new SolidColorBrush(Colors.LightBlue);
+            grdItems.RowBackground = new SolidColorBrush(Colors.LightGoldenrodYellow);
+            grdItems.SelectionMode = DataGridSelectionMode.Single;
+        }
+
+        private IList<clsItems> AutoFillDataGrid()
         {
             /*
              *call business logic for retrieving data from the invoices database.
              */
             clsEditSQL es = new clsEditSQL();
-            DataSet ds = new DataSet("ItemsTable");
+            DataSet ds;
             IList<clsItems> items = new List<clsItems>();
             items.Clear();
-            ds = es.pullItemsTable();
-            grdItems.ItemsSource = ds.DefaultViewManager;
+            items = es.pullItemsTable();
+            //grdItems.ItemsSource = ds.DefaultViewManager;
+
+            return items;
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -66,12 +80,12 @@ namespace FinalProject
         private void grdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid gd = (DataGrid)sender;
-            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            clsItems row_selected = gd.SelectedItem as clsItems;
             if(row_selected != null)
             {
-                txbItemCode.Text = row_selected["Item Code"].ToString();
-                txbItemDesc.Text = row_selected["Item Description"].ToString();
-                txbCost.Text = row_selected["Cost"].ToString();
+                txbItemCode.Text = row_selected.Item_Code.ToString();
+                txbItemDesc.Text = row_selected.Item_Desc.ToString();
+                txbCost.Text = row_selected.Cost.ToString();
             }
         }
 

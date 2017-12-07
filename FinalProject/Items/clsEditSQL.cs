@@ -7,10 +7,6 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 
-
-//This is the DataAccess class provided for us that you said we could use.
-//Credits: Shawn Cowder
-
 /// <summary>
 /// Class used to access the database.
 /// </summary>
@@ -19,16 +15,26 @@ public class clsEditSQL
 
     public void updateItems(string itemcode, string itemDesc, string cost)
     {
-        /*
-         * Update data in the ItemDesc table:
-         * UPDATE ItemDesc SET ItemCode = 'BB', ItemDesc = 'itemDesc', Cost = 'cost' WHERE ItemCode='itemcode';
-         */
+        decimal decCost = Convert.ToDecimal(cost);
+        string result = string.Empty;
+        //*Update data in the ItemDesc table:
+        string saveItem = "UPDATE ItemDesc SET ItemCode = '" + itemcode + "', ItemDesc = '" + itemDesc + "', Cost = " + decCost + " WHERE ItemCode = '" + itemcode + "'";
+
+        try
+        {
+            clsDataAccess da = new clsDataAccess();
+            result = da.ExecuteScalarSQL(saveItem);
+        }
+        catch
+        {
+
+        }
     }
 
-    public DataSet pullItemsTable()
+    public IList<clsItems> pullItemsTable()
     {
         List<clsItems> items = new List<clsItems>();
-        DataSet ds = new DataSet("Items");
+        DataSet ds;
         items.Clear();
 
         try
@@ -45,6 +51,7 @@ public class clsEditSQL
                 item.Item_Code = ds.Tables[0].Rows[i][0].ToString();
                 item.Item_Desc = ds.Tables[0].Rows[i][1].ToString();
                 item.Cost = Convert.ToDecimal(ds.Tables[0].Rows[i][2].ToString());
+                items.Add(item);
             }
         }
         catch (Exception ex)
@@ -52,7 +59,7 @@ public class clsEditSQL
             MessageBox.Show("PullItemsTable: " + ex.Message);
         }
 
-        return ds;
+        return items;
 
     }
 
@@ -66,7 +73,7 @@ public class clsEditSQL
             //initializes clsDataAccess class
             clsDataAccess da = new clsDataAccess();
             //check to see if seat number is already used
-            String checkIfExists = "SELECT * FROM LINEITEMS WHERE ItemCode = '" + itemcode + "'";
+            String checkIfExists = "SELECT * FROM LineItems WHERE ItemCode = '" + itemcode + "'";
             String deleteItem = "DELETE FROM ItemDesc WHERE ItemCode = '" + itemcode + "'";
             int ret = 0;
             int rowsAffected = 0;

@@ -27,12 +27,12 @@
         <Label x:Name="label2" Content="Item Desc" HorizontalAlignment="Left" Margin="21,148,0,0" VerticalAlignment="Top" Height="26" Width="62"/>
         <Label x:Name="label3" Content="Item Code" HorizontalAlignment="Left" Margin="22,89,0,0" VerticalAlignment="Top" Height="26" Width="65"/>
         <Label x:Name="label4" Content="Cost" HorizontalAlignment="Left" Margin="24,212,0,0" VerticalAlignment="Top" Height="26" Width="34"/>
-        <DataGrid x:Name="grdItems" HorizontalAlignment="Left" Height="217" Margin="379,69,0,0" VerticalAlignment="Top" Width="310" SelectionChanged="grdItems_SelectionChanged" AutoGenerateColumns="False">
-            <DataGrid.Columns>
+        <DataGrid x:Name="grdItems" HorizontalAlignment="Left" Height="217" Margin="379,69,0,0" VerticalAlignment="Top" Width="310" SelectionChanged="grdItems_SelectionChanged">
+            <!--<DataGrid.Columns>
                 <DataGridTextColumn Header="Item Code" Binding="{Binding ItemCode}" Width="Auto"/>
                 <DataGridTextColumn Header="Item Description" Binding="{Binding ItemDesc}" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="Cost" Binding="{Binding Cost}" Width="Auto"/>    
-            </DataGrid.Columns>
+            </DataGrid.Columns>-->
         </DataGrid>
         <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="255,323,0,0" VerticalAlignment="Top" Width="75" Height="37" Click="btnDelete_Click"/>
 
