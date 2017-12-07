@@ -23,7 +23,7 @@ namespace FinalProject
         public EditPage()
         {
             InitializeComponent();
-            //AutoFillDataGrid();
+            AutoFillDataGrid();
         }
 
         private void AutoFillDataGrid()
@@ -31,10 +31,12 @@ namespace FinalProject
             /*
              *call business logic for retrieving data from the invoices database.
              */
-            BusinessLogic bl = new BusinessLogic();
-            DataSet ds = new DataSet();
-            ds = bl.pullTable("itemdesc");
-            grdItems.DataContext = ds;
+            clsEditSQL es = new clsEditSQL();
+            DataSet ds = new DataSet("ItemsTable");
+            IList<clsItems> items = new List<clsItems>();
+            items.Clear();
+            ds = es.pullItemsTable();
+            grdItems.ItemsSource = ds.DefaultViewManager;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -43,13 +45,12 @@ namespace FinalProject
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    //BusinessLogic bl = new BusinessLogic();
-                    //bl.updateSQL(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
-                    MessageBox.Show("Hello to you too!", "My App");
+                    clsEditSQL es = new clsEditSQL();
+                    es.updateItems(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
                     break;
                 case MessageBoxResult.Cancel:
                     MainWindow mw = new MainWindow();
-                    mw.Show();
+                    mw.ShowDialog();
                     this.Close();
                     break;
             }
@@ -76,10 +77,16 @@ namespace FinalProject
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            string itemcost = txbItemCode.Text;
-            BusinessLogic bl = new BusinessLogic();
+            string itemcode = txbItemCode.Text;
+            clsEditSQL es = new clsEditSQL();
             //If not found in existing invoices
-            bl.DeleteItem(itemcost);
+            if (es.DeleteItem(itemcode))
+            {
+                txbCost.Text = "";
+                txbItemCode.Text = "";
+                txbItemDesc.Text = "";
+                AutoFillDataGrid();
+            }
         }
     }
 }

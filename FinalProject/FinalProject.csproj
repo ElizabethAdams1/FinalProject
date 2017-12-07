@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="clsDataAccess.cs" />
+    <Compile Include="clsItems.cs" />
     <Compile Include="Items\clsEditSQL.cs" />
     <Compile Include="Main\clsMainFunctions.cs" />
     <Compile Include="Main\clsMainSQL.cs" />
@@ -76,7 +77,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\BusinessLogic.cs" />
     <Compile Include="Items\EditPage.xaml.cs">
       <DependentUpon>EditPage.xaml</DependentUpon>
     </Compile>
