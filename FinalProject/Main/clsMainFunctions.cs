@@ -31,10 +31,6 @@ namespace FinalProject.Main
 
         }
 
-        //public Invoices[] LoadAllInvoices(InvoicesData all)
-        //{
-
-        //}
 
         /// <summary>
         /// method that calls sql statements in clsMainSQL to add an invoice to db
@@ -124,6 +120,67 @@ namespace FinalProject.Main
             }
 
         }
+
+
+        public void DeleteInvoiceItem(int lineItemNum, int invoiceNum)
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                sql.DeleteInvoiceItem(lineItemNum, invoiceNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public InvoiceDetailsData[] LoadInvoiceDetails(int invoiceNum)
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                return sql.LoadInvoiceDetails(invoiceNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
+        }
+
+        public DataSet LoadInvoiceDetailsAsDataSet(int invoiceNum)
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                return sql.LoadAllItemsFromInvoiceAsDataSet(invoiceNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
+        }
+
+
+
+        //public DataSet LoadAllInventoryItemsAsDataSet()
+        //{
+        //    try
+        //    {
+        //        clsMainSQL sql = new clsMainSQL();
+        //        return sql.LoadAllInventoryItemsAsDataSet();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+        //    }
+
+        //}
+
 
 
     }

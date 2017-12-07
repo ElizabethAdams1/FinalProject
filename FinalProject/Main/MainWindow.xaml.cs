@@ -97,21 +97,36 @@ namespace FinalProject
 
             if (int.TryParse(txbInvNum.Text, out invoiceNum))
             {
-                DataSet ds = funcs.LoadAllInvoiceItemsAsDataSet(invoiceNum);
-                dgInvoiceItems.ItemsSource = ds.Tables[0].DefaultView;
+                InvoiceDetailsData[] ds = funcs.LoadInvoiceDetails(invoiceNum);
+                dgInvoiceItems.ItemsSource = ds;
             }
             else
             {
                 MessageBox.Show("invalid invoice number");
             }
-
-
-            //dgInvoiceItems.DataContext = ds;
         }
+
 
         private void btnDeleteItem_Click(object sender, RoutedEventArgs e)
         {
             //this will delete a row from LineItems as specified by the invoice number, and LineItemNum accessed through txbInvNum and dgInvoiceItems by calling deleteInvoiceItem function in clsMainSQL
+
+    //********************************************* check 
+    //*************************************************add column to datagrid for item costs        
+            if(dgInvoiceItems.SelectedItem != null)
+            {
+                clsMainFunctions funcs = new clsMainFunctions();
+                InvoiceDetailsData data = (InvoiceDetailsData) dgInvoiceItems.SelectedItem;
+                funcs.DeleteInvoiceItem(data.LineItemNumber, data.InvoiceNum);
+
+                // Reload DataGrid from Database.
+                InvoiceDetailsData[] ds = funcs.LoadInvoiceDetails(data.InvoiceNum);
+                dgInvoiceItems.ItemsSource = ds;
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to remove");
+            }
         }
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
@@ -175,6 +190,11 @@ namespace FinalProject
             //txbItemCost = cost.ToString();
 
             txbItemCost.Text = ((ItemDescData)cmbItems.SelectedItem).Cost.ToString();
+        }
+
+        private void dgInvoiceItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
 

@@ -88,15 +88,14 @@ namespace FinalProject.Main
         /// <param name="lineItemNum">the line of the invoice to be deleted</param>
         /// <param name="invoiceNum">The number of the invoice being referenced</param>
         /// <returns></returns>
-        public DataSet deleteInvoiceItem(int lineItemNum, int invoiceNum)
+        public void DeleteInvoiceItem(int lineItemNum, int invoiceNum)
         {
             try
             {
-                DataSet myDS;
                 int iRet = 0;
-                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + invoiceNum + " AND WHERE LineItemNum = " + lineItemNum ;
-                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
-                return myDS;
+                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + invoiceNum + " AND LineItemNum = " + lineItemNum ;
+                iRet = db.ExecuteNonQuery(sSQL);
+                //return;
             }
             catch (Exception ex)
             {
@@ -229,6 +228,61 @@ namespace FinalProject.Main
             }
 
         }
+
+
+        public DataSet LoadInvoiceDetailsAsDataSet(int invoiceNum)
+        {
+            try
+            {
+                int iRetVal = 0;
+                clsDataAccess DataAccess = new clsDataAccess();
+
+                DataSet data = DataAccess.ExecuteSQLStatement("SELECT Invoices.InvoiceNum, ItemDesc.ItemDesc, LineItems.LineItemNum, ItemDesc.Cost FROM ((Invoices INNER JOIN LineItems ON Invoices.InvoiceNum = LineItems.InvoiceNum) INNER JOIN ItemDesc ON LineItems.ItemCode = ItemDesc.ItemCode) WHERE Invoices.InvoiceNum = " + invoiceNum + ";", ref iRetVal);
+
+                return data;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+        }
+
+        public InvoiceDetailsData[] LoadInvoiceDetails(int invoiceNum)
+        {
+            try
+            {
+                List<InvoiceDetailsData> InvoiceDetailsList = new List<InvoiceDetailsData>();
+
+                DataSet data = LoadInvoiceDetailsAsDataSet(invoiceNum);
+
+                foreach (DataRow row in data.Tables[0].Rows)
+                {
+                    InvoiceDetailsList.Add(new InvoiceDetailsData((int)row[0], (string)row[1], (int)row[2], (Decimal)row[3]));
+                }
+
+                return InvoiceDetailsList.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+        }
+
+
+
 
         /// <summary>
         /// method to load all items for specific invoice from LineItems
