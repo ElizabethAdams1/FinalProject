@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Reflection;
+using FinalProject.DataClasses;
+using FinalProject.Main;
 
 
 
@@ -20,22 +22,22 @@ namespace FinalProject.Main
         /// <summary>
         /// Returns all the inventory Items in the Inventory table
         /// </summary>
-        /// <returns></returns>
-        public DataSet allInventoryItems()
-        {
-            try
-            {
-                DataSet myDS;
-                int iRet = 0;
-                string sSQL = "SELECT ItemDesc FROM ItemDesc";
-                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
-                return myDS;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
+        /// <returns>all items from inventory</returns>
+        //public DataSet allInventoryItems()
+        //{
+        //    try
+        //    {
+        //        DataSet myDS;
+        //        int iRet = 0;
+        //        string sSQL = "SELECT ItemDesc FROM ItemDesc";
+        //        myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+        //        return myDS;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+        //    }
+        //}
 
         /// <summary>
         /// retrieves cost of specified item from db using ItemCode
@@ -163,6 +165,10 @@ namespace FinalProject.Main
             }
         }
 
+        /// <summary>
+        /// method to load all invoices 
+        /// </summary>
+        /// <returns>array of invoices</returns>
         public InvoicesData[] LoadAllInvoices()
         {
             try
@@ -195,23 +201,119 @@ namespace FinalProject.Main
             }
         }
 
+        /// <summary>
+        /// method to load all items for specific invoice from LineItems
+        /// </summary>
+        /// <param name="invoiceNum">invoice nubmer</param>
+        /// <returns>array of items on invoice</returns>
+        public DataSet LoadAllItemsFromInvoiceAsDataSet(int invoiceNum)
+        {
+            try
+            {
+                int iRetVal = 0;
 
-        //public int SaveInvoiceToDB(int inv)
-        //{
-        //    int iRetVal = 0;
+                clsDataAccess DataAccess = new clsDataAccess();
 
-        //    clsDataAccess DataAccess = new clsDataAccess(); // new instance of clsDataAccess for opening connection
+                DataSet data = DataAccess.ExecuteSQLStatement("SELECT * FROM LineItems WHERE InvoiceNum = " + invoiceNum, ref iRetVal);
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+        }
+
+        /// <summary>
+        /// method to load all items for specific invoice from LineItems
+        /// </summary>
+        /// <param name="invoiceNum">invoice nubmer</param>
+        /// <returns>array of items on invoice</returns>
+        public LineItemsData[] LoadAllItemsFromInvoice(int invoiceNum)
+        {
+            try
+            {
+                List<LineItemsData> InvoiceItemsList = new List<LineItemsData>();
+
+                DataSet data = LoadAllItemsFromInvoiceAsDataSet(invoiceNum);
+
+                foreach (DataRow row in data.Tables[0].Rows)
+                {
+                    InvoiceItemsList.Add(new LineItemsData((int)row[0], (int)row[1], (string)row[2]));
+                }
+
+                return InvoiceItemsList.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+        }
+
+         public DataSet LoadAllInventoryItemsAsDataSet()
+        {
+            try
+            {
+                int iRetVal = 0;
+                clsDataAccess DataAccess = new clsDataAccess();
+
+                DataSet data = DataAccess.ExecuteSQLStatement ("SELECT * from ItemDesc", ref iRetVal);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+        }
+
+        /// <summary>
+        /// method that loads all inventory items data into an array
+        /// </summary>
+        /// <returns>array of inventory items</returns>
+        public ItemDescData[] LoadAllInventoryItems()
+        {
+            try
+            {
+               List<ItemDescData> InventoryItemsList = new List<ItemDescData>();
+
+                DataSet data = LoadAllInventoryItemsAsDataSet();
+
+                foreach (DataRow row in data.Tables[0].Rows)
+                {
+                    InventoryItemsList.Add(new ItemDescData((string)row[0], (string)row[1], (Decimal) row[2]));
+                }
+
+                return InventoryItemsList.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
 
 
-        //    string SQL = "INSERT INTO Invoices (InvoiceDate, TotalCharges) VALUES('" + invoice_Date + "', '" + total_charges + "')";
-
-        //    iRetVal = DataAccess.ExecuteNonQuery(SQL); // SQL statement to save information from Flight table
-
-
-        //    return invoice_Num;
-        //}
-
-
-
+        }
     }
 }

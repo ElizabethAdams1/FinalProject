@@ -27,11 +27,11 @@
         <Label x:Name="lblInvoiceDate" Content="Invoice Date:" HorizontalAlignment="Left" Margin="42,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.788,0.477" Height="26" Width="78"/>
         <TextBox x:Name="txbInvDate" HorizontalAlignment="Left" Height="23" Margin="125,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="lblSeectItems" Content="Select Item to Add to Invoice" HorizontalAlignment="Left" Margin="30,148,0,0" VerticalAlignment="Top" Height="26" Width="163"/>
-        <ComboBox x:Name="cmbItems" HorizontalAlignment="Left" Margin="30,179,0,0" VerticalAlignment="Top" Width="167" Height="22"/>
-        <DataGrid x:Name="dgInvoiceItems" HorizontalAlignment="Left" Margin="423,13,0,0" VerticalAlignment="Top" Height="192" Width="312" IsManipulationEnabled="True"/>
+        <ComboBox x:Name="cmbItems" HorizontalAlignment="Left" Margin="30,179,0,0" VerticalAlignment="Top" Width="167" Height="22" SelectionChanged="cmbItems_SelectionChanged"/>
+        <DataGrid x:Name="dgInvoiceItems" HorizontalAlignment="Left" Margin="423,13,0,0" VerticalAlignment="Top" Height="192" Width="312" IsManipulationEnabled="True" CanUserAddRows="False"/>
         <TextBox x:Name="txbItemCost" HorizontalAlignment="Left" Height="23" Margin="306,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" IsReadOnly="True"/>
         <Label x:Name="lblIemCost" Content="Item Cost" HorizontalAlignment="Left" Margin="217,179,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
-        <Button x:Name="btnAddItem" Content="Add Item to Invoice" HorizontalAlignment="Left" Margin="238,226,0,0" VerticalAlignment="Top" Width="145" Height="19" Click="btnAddItem_Click"/>
+        <Button x:Name="btnAddItem" Content="Add Item to Invoice" HorizontalAlignment="Left" Margin="238,226,0,0" VerticalAlignment="Top" Width="145" Height="19"/>
         <Label x:Name="lblInvoiceTotal" Content="Invoice Total:" HorizontalAlignment="Left" Margin="443,220,0,0" VerticalAlignment="Top" Height="26" Width="78"/>
         <TextBox x:Name="txbInvTotal" HorizontalAlignment="Left" Height="23" Margin="594,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnDeleteItem" Content="Delete Item from Invoice" HorizontalAlignment="Left" Margin="238,275,0,0" VerticalAlignment="Top" Width="145" RenderTransformOrigin="0.476,3.31" Height="19" Click="btnDeleteItem_Click"/>

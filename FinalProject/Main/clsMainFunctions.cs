@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using FinalProject.DataClasses;
+using System.Data;
 
 namespace FinalProject.Main
 {
@@ -13,7 +14,7 @@ namespace FinalProject.Main
         //Invoices invoices = new Invoices();
 
         /// <summary>
-        /// Method that calls delete query from clsMainSQL
+        /// Method that calls delete query from clsMainSQL to delete invoice
         /// </summary>
         /// <param name="invoiceNum">invoice number</param>
         public void DeleteInvoice(int invoiceNum)
@@ -30,15 +31,16 @@ namespace FinalProject.Main
 
         }
 
-        public void LoadAllInvoices(InvoicesData all)
-        {
-     //       foreach (InvoicesData data in invoices.LoadAll())
-      //      {
-       //         cbChoosePassenger.Items.Add(data);
-//            }
+        //public Invoices[] LoadAllInvoices(InvoicesData all)
+        //{
 
-        }
+        //}
 
+        /// <summary>
+        /// method that calls sql statements in clsMainSQL to add an invoice to db
+        /// </summary>
+        /// <param name="totalCharge">total charge of invoice</param>
+        /// <param name="invoiceDate">date of invoice</param>
         public void AddInvoice(double totalCharge, DateTime invoiceDate)
         {
             try
@@ -52,5 +54,77 @@ namespace FinalProject.Main
             }
 
         }
-    }   
+
+        /// <summary>
+        /// method that loads invoice items from db calling LoadAllItemsFromInvoice in clsMainSQL invoice number
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <returns>array of invoice information</returns>
+        public LineItemsData[] LoadAllInvoiceItems(int invoiceNum)
+        {
+            try
+            {
+               clsMainSQL sql = new clsMainSQL();
+               return sql.LoadAllItemsFromInvoice(invoiceNum);                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
+        }
+
+        /// <summary>
+        /// method that loads invoice items from db calling LoadAllItemsFromInvoice in clsMainSQLinvoice number
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <returns>array of invoice information</returns>
+        public DataSet LoadAllInvoiceItemsAsDataSet(int invoiceNum)
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                return sql.LoadAllItemsFromInvoiceAsDataSet(invoiceNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
+        }
+
+        public ItemDescData[] LoadAllInventoryItems()
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                return sql.LoadAllInventoryItems();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
+        }
+
+
+        public DataSet LoadAllInventoryItemsAsDataSet()
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                return sql.LoadAllInventoryItemsAsDataSet();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+        }
+
+
+    }
 }
