@@ -37,8 +37,38 @@ namespace FinalProject
         {
             InitializeComponent();
             wndSearchForm = new Search.wndSearch();
+
+            //cmbItems will be populated with Inventory data through LoadAllInventoryItems function in clsMainSQL
+
+            clsMainFunctions getInv = new clsMainFunctions();
+  //          DataSet ds = getInv.LoadAllInventoryItemsAsDataSet();
+            foreach (ItemDescData data in getInv.LoadAllInventoryItems())
+            {
+                cmbItems.Items.Add(data);
+            }
+
+            //private void edit_Click(object sender, RoutedEventArgs e)
+
+
+            //clsMainFunctions funcs = new clsMainFunctions();
+
+            //    if (int.TryParse(txbInvNum.Text, out invoiceNum))
+            //    {
+            //        DataSet ds = funcs.LoadAllInvoiceItemsAsDataSet(invoiceNum);
+            //dgInvoiceItems.ItemsSource = ds.Tables[0].DefaultView;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("invalid invoice number");
+            //    }
+
         }
 
+        /// <summary>
+        /// loads search window when "search for invoice" is clicked from corner menu of main window
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event arg</param>
         private void search_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
@@ -47,6 +77,11 @@ namespace FinalProject
 
         }
 
+        /// <summary>
+        /// loads search window when "edit item list" is clicked from corner menu of main window
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event arg</param>
         private void edit_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
@@ -57,6 +92,21 @@ namespace FinalProject
         private void btnEditInvoice_Click(object sender, RoutedEventArgs e)
         {
             //this function will access a specified record (through txbInvNum) from the database.
+            int invoiceNum;
+            clsMainFunctions funcs = new clsMainFunctions();
+
+            if (int.TryParse(txbInvNum.Text, out invoiceNum))
+            {
+                DataSet ds = funcs.LoadAllInvoiceItemsAsDataSet(invoiceNum);
+                dgInvoiceItems.ItemsSource = ds.Tables[0].DefaultView;
+            }
+            else
+            {
+                MessageBox.Show("invalid invoice number");
+            }
+
+
+            //dgInvoiceItems.DataContext = ds;
         }
 
         private void btnDeleteItem_Click(object sender, RoutedEventArgs e)
@@ -70,26 +120,40 @@ namespace FinalProject
 
         }
 
+        /// <summary>
+        /// method that calls AddInvoice from clsMainFunctions to add invoice to db. this will add a row to the invoices table using the InvoiceDate from txbInvDate, the TotalCharge from txbInvTotal by calling the addInvoice function in clsMainSQL
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event arg</param>
         private void btnAddInvoice_Click(object sender, RoutedEventArgs e)
         {
-            //this will add a row to the invoices table using the InvoiceDate from txbInvDate, the TotalCharge from txbInvTotal by calling the addInvoice function in clsMainSQL
             clsMainFunctions businessLogic = new clsMainFunctions();
+
             double totalCost;
-            //string date = txbInvDate.ToString();
             DateTime invoiceDate;
 
             if (double.TryParse(txbInvTotal.Text, out totalCost))
             {
                 if(DateTime.TryParse(txbInvDate.Text, out invoiceDate))
                 {
-                   // invoiceDate = Convert.ToDateTime(date);
                     InvoicesData invoice = new InvoicesData(-1, invoiceDate, totalCost);
                     businessLogic.AddInvoice(totalCost, invoiceDate);
                     MessageBox.Show("Invoice has been saved.");
                 }
             }
+            else
+            {
+                MessageBox.Show("invalid invoice number");
+            }
+
+
         }
 
+        /// <summary>
+        /// method that calls DeleteInvoice from clsMainFunctions to delete invoice from db.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event arg</param>
         private void btnDeleteInvoice_Click(object sender, RoutedEventArgs e)
         {
             clsMainFunctions businessLogic = new clsMainFunctions();
@@ -105,7 +169,19 @@ namespace FinalProject
 
         }
 
-        //cmbItems will be populated with Inventory data through allInventoryItems function in clsMainSQL
+        private void cmbItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //decimal cost = ((ItemDescData)cmbItems.SelectedItem).Cost;
+            //txbItemCost = cost.ToString();
+
+            txbItemCost.Text = ((ItemDescData)cmbItems.SelectedItem).Cost.ToString();
+        }
+
+
+
+
+
+
 
         //txbItmeCost is a read only and will be populateed with Cost from ItemDesc in database using itemCost function in clsMainSQL
 

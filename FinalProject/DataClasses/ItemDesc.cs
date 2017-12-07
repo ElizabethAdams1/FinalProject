@@ -28,7 +28,7 @@ namespace FinalProject.DataClasses
         /// </summary>
         string item_Code;
         string item_Desc;
-        double cost;
+        Decimal cost;
 
         /// <summary>
         /// prperty for current item_Code
@@ -64,7 +64,7 @@ namespace FinalProject.DataClasses
         /// <summary>
         /// property for current item's cost
         /// </summary>
-        public double Cost
+        public Decimal Cost
         {
             get
             {
@@ -82,7 +82,7 @@ namespace FinalProject.DataClasses
         /// <param name="itemCode">code for specific item</param>
         /// <param name="itemDesc">description for specific item</param>
         /// <param name="itemCost">cost of item</param>
-        public ItemDescData (string itemCode, string itemDesc, double itemCost)
+        public ItemDescData (string itemCode, string itemDesc, Decimal itemCost)
         {
             item_Code = itemCode;
             item_Desc = itemDesc;
@@ -101,6 +101,11 @@ namespace FinalProject.DataClasses
             iRetVal = DataAccess.ExecuteNonQuery(SQL);
 
             return ItemCode;
+        }
+
+        public override string ToString()
+        {
+            return ItemDesc;
         }
     }
 }
