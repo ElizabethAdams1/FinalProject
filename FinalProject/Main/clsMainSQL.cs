@@ -42,7 +42,7 @@ namespace FinalProject.Main
         /// </summary>
         /// <param name="itemCode"></param>
         /// <returns>cost of item</returns>
-        public DataSet itemCost(string itemCode)
+        public DataSet GetItemCost(string itemCode)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace FinalProject.Main
             {
                 DataSet myDS;
                 int iRet = 0;
-                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = '" + invoiceNum + "' AND WHERE LineItemNum = '" + lineItemNum + "'";
+                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + invoiceNum + " AND WHERE LineItemNum = " + lineItemNum ;
                 myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
                 return myDS;
             }
@@ -122,15 +122,19 @@ namespace FinalProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
-        public void addInvoice(double totalCharge, DateTime invoiceDate)
+        /// <summary>
+        /// method to add invoice to db
+        /// </summary>
+        /// <param name="totalCharge">user entered total charge</param>
+        /// <param name="invoiceDate">user entered date of invoice</param>
+        public void AddInvoice(double totalCharge, DateTime invoiceDate)
         {
             try
             {
-                DataSet myDS;
+                //DataSet myDS;
                 int iRet = 0;
-                string sSQL = "INSERT into Invoices (TotalCharge, InvoiceDate) VALUES (" + totalCharge + ", " + invoiceDate + ")";
-                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                string sSQL = "INSERT into Invoices (TotalCharge, InvoiceDate) VALUES (" + totalCharge + ", '" + invoiceDate.ToShortDateString() + "')";
+                iRet = db.ExecuteNonQuery(sSQL);
             }
             catch (Exception ex)
             {
@@ -138,6 +142,76 @@ namespace FinalProject.Main
             }
 
         }
+
+        /// <summary>
+        /// method to delete invoice from db
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        public void DelInvoice(int invoiceNum)
+        {
+            try
+            {
+                string sqlDelInvoice = "DELETE FROM Invoices WHERE InvoiceNum = " + invoiceNum;
+                string sqlDelItems = "DELETE LineItems.* FROM LineItems WHERE InvoiceNum = " + invoiceNum;
+
+                db.ExecuteNonQuery(sqlDelItems);
+                db.ExecuteNonQuery(sqlDelInvoice);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public InvoicesData[] LoadAllInvoices()
+        {
+            try
+            {
+                int iRetVal = 0;
+
+
+                List<InvoicesData> InvoiceList = new List<InvoicesData>();
+
+                clsDataAccess DataAccess = new clsDataAccess(); // new instance of clsDataAccess for opening connection
+
+                DataSet data = DataAccess.ExecuteSQLStatement("SELECT * FROM Invoices", ref iRetVal); // SQL statement to load information from Flight table
+
+                foreach (DataRow row in data.Tables[0].Rows)
+                {
+                    InvoiceList.Add(new InvoicesData((int)row[0], (DateTime)row[1], (double)row[2]));
+                }
+
+                return InvoiceList.ToArray();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+        }
+
+
+        //public int SaveInvoiceToDB(int inv)
+        //{
+        //    int iRetVal = 0;
+
+        //    clsDataAccess DataAccess = new clsDataAccess(); // new instance of clsDataAccess for opening connection
+
+
+        //    string SQL = "INSERT INTO Invoices (InvoiceDate, TotalCharges) VALUES('" + invoice_Date + "', '" + total_charges + "')";
+
+        //    iRetVal = DataAccess.ExecuteNonQuery(SQL); // SQL statement to save information from Flight table
+
+
+        //    return invoice_Num;
+        //}
+
+
 
     }
 }

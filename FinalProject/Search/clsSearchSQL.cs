@@ -61,7 +61,7 @@ namespace FinalProject.Search
             try { 
             DataSet myDS;
             int iRet = 0;
-            string sSQL = "SELECT TotalCharge FROM Invoices";
+            string sSQL = "SELECT DISTINCT TotalCharge FROM Invoices ORDER BY TotalCharge ASC";
             myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
             return myDS;
             }

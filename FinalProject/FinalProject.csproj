@@ -56,8 +56,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="clsDataAccess.cs" />
+    <Compile Include="DataClasses\ItemDesc.cs" />
+    <Compile Include="DataClasses\LineItems.cs" />
+    <Compile Include="Items\clsEditSQL.cs" />
     <Compile Include="Main\clsMainFunctions.cs" />
     <Compile Include="Main\clsMainSQL.cs" />
+    <Compile Include="DataClasses\Invoices.cs" />
     <Compile Include="Search\clsSearchFunctions.cs" />
     <Compile Include="Search\clsSearchSQL.cs" />
     <Compile Include="Search\wndSearch.xaml.cs">
@@ -75,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessLogic.cs" />
+    <Compile Include="Items\BusinessLogic.cs" />
     <Compile Include="Items\EditPage.xaml.cs">
       <DependentUpon>EditPage.xaml</DependentUpon>
     </Compile>
@@ -117,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Invoice.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

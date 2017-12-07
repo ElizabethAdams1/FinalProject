@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace FinalProject
 {
@@ -22,6 +23,18 @@ namespace FinalProject
         public EditPage()
         {
             InitializeComponent();
+            //AutoFillDataGrid();
+        }
+
+        private void AutoFillDataGrid()
+        {
+            /*
+             *call business logic for retrieving data from the invoices database.
+             */
+            BusinessLogic bl = new BusinessLogic();
+            DataSet ds = new DataSet();
+            ds = bl.pullTable("itemdesc");
+            grdItems.DataContext = ds;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -31,7 +44,7 @@ namespace FinalProject
             {
                 case MessageBoxResult.OK:
                     //BusinessLogic bl = new BusinessLogic();
-                    //bl.updateSQL(txbFirstName.Text, txbLastName.Text, txbItem.Text, txbQuantity.Text);
+                    //bl.updateSQL(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
                     MessageBox.Show("Hello to you too!", "My App");
                     break;
                 case MessageBoxResult.Cancel:
@@ -47,6 +60,26 @@ namespace FinalProject
             MainWindow mw = new MainWindow();
             mw.Show();
             this.Close();
+        }
+
+        private void grdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            if(row_selected != null)
+            {
+                txbItemCode.Text = row_selected["Item Code"].ToString();
+                txbItemDesc.Text = row_selected["Item Description"].ToString();
+                txbCost.Text = row_selected["Cost"].ToString();
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            string itemcost = txbItemCode.Text;
+            BusinessLogic bl = new BusinessLogic();
+            //If not found in existing invoices
+            bl.DeleteItem(itemcost);
         }
     }
 }
