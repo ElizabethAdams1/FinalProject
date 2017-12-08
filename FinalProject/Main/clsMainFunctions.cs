@@ -165,23 +165,27 @@ namespace FinalProject.Main
 
         }
 
+        public int UpdateInvoiceTotal(int invoiceNum, Decimal invoiceTotal)
+        {
+            try
+            {
+                clsMainSQL sql = new clsMainSQL();
+                return sql.UpdateInvoiceTotal(invoiceNum, invoiceTotal);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
 
+        }
 
-        //public DataSet LoadAllInventoryItemsAsDataSet()
+        //public decimal CalculateTotalCost(int invoiceNum)
         //{
         //    try
         //    {
         //        clsMainSQL sql = new clsMainSQL();
-        //        return sql.LoadAllInventoryItemsAsDataSet();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-        //    }
 
+        //    }
         //}
-
-
-
     }
 }

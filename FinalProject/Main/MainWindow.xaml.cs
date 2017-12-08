@@ -94,11 +94,15 @@ namespace FinalProject
             //this function will access a specified record (through txbInvNum) from the database.
             int invoiceNum;
             clsMainFunctions funcs = new clsMainFunctions();
+           // int colSum;
 
             if (int.TryParse(txbInvNum.Text, out invoiceNum))
             {
                 InvoiceDetailsData[] ds = funcs.LoadInvoiceDetails(invoiceNum);
                 dgInvoiceItems.ItemsSource = ds;
+                decimal sumTotalCost = GetInvoiceTotalFromDataGrid();
+
+                txbInvTotal.Text = sumTotalCost.ToString("$0.00");
             }
             else
             {
@@ -106,22 +110,47 @@ namespace FinalProject
             }
         }
 
+        private Decimal GetInvoiceTotalFromDataGrid()
+        {
+            Decimal sumTotalCost = 0.0m;
+            foreach (object data in dgInvoiceItems.Items)
+            {
+                sumTotalCost += ((InvoiceDetailsData)data).ItemCost;
+            }
+
+            return sumTotalCost;
+        }
+
 
         private void btnDeleteItem_Click(object sender, RoutedEventArgs e)
         {
             //this will delete a row from LineItems as specified by the invoice number, and LineItemNum accessed through txbInvNum and dgInvoiceItems by calling deleteInvoiceItem function in clsMainSQL
 
-    //********************************************* check 
-    //*************************************************add column to datagrid for item costs        
+    //********************************************* check invoice total to match item editing in ti
+            //add column to datagrid for item costs        
             if(dgInvoiceItems.SelectedItem != null)
             {
                 clsMainFunctions funcs = new clsMainFunctions();
                 InvoiceDetailsData data = (InvoiceDetailsData) dgInvoiceItems.SelectedItem;
                 funcs.DeleteInvoiceItem(data.LineItemNumber, data.InvoiceNum);
 
+
+
+      ////          funcs.UpdateInvoiceTotal(invD)
+          //      InvoicesData invData = (InvoicesData)txbInvTotal.
+
+
                 // Reload DataGrid from Database.
                 InvoiceDetailsData[] ds = funcs.LoadInvoiceDetails(data.InvoiceNum);
                 dgInvoiceItems.ItemsSource = ds;
+
+                // Update the invoice total textbox.
+                Decimal sumTotalCost = GetInvoiceTotalFromDataGrid();
+                txbInvTotal.Text = sumTotalCost.ToString("$0.00");
+
+                // Update the database invoice total.
+                funcs.UpdateInvoiceTotal(data.InvoiceNum, sumTotalCost);
+
             }
             else
             {
@@ -194,8 +223,13 @@ namespace FinalProject
 
         private void dgInvoiceItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ///not sure if i need this
         }
+
+        //public int CalculateTotalCost(int invoiceNum)
+        //{
+        //    invoiceNum = 
+        //}
 
 
 

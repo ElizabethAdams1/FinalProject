@@ -391,5 +391,30 @@ namespace FinalProject.Main
 
 
         }
+
+        public int UpdateInvoiceTotal(int invoiceNum, Decimal invoiceTotal)
+        {
+            try
+            {
+                int iRetVal = 0;
+                clsDataAccess DataAccess = new clsDataAccess();
+
+                iRetVal = DataAccess.ExecuteNonQuery("UPDATE Invoices SET TotalCharge = " + invoiceTotal + " WHERE InvoiceNum = " + invoiceNum + ";");
+                return iRetVal;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+        }
     }
 }
+//UPDATE table_name
+//SET column1 = value1, column2 = value2, ...
+//WHERE condition;
