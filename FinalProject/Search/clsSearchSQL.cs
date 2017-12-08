@@ -90,8 +90,39 @@ namespace FinalProject.Search
             }
         }
 
+        public DataSet selectInvoiceWithDate(string date)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "#";
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
-        public DataSet selectAllInvoices()
+        public DataSet selectInvoiceWithTotalCharges(string totCharge)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE TotalCharge =" +totCharge;
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public DataSet returnAllInvoices()
         {
             try
             {
@@ -100,6 +131,7 @@ namespace FinalProject.Search
                 string sSQL = "SELECT * FROM Invoices";
                 myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
                 return myDS;
+
             }
             catch (Exception ex)
             {

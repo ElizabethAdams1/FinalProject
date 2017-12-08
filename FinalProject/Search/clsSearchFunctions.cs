@@ -43,8 +43,27 @@ namespace FinalProject.Search
 
         public void fillInvoices(DataGrid dg)
         {
-            DataSet myDS = mySQL.selectAllInvoices();
-            //dg.ItemsSource =  myDS.Tables["Invoices"].AsEnumerable();
+            DataSet myDS = mySQL.returnAllInvoices();
+            dg.DataContext = myDS.Tables[0].DefaultView;
+        }
+
+        public void filterByNum(string number, DataGrid dg)
+        {
+            DataSet myDS = mySQL.SelectInvoiceData(number);
+            dg.DataContext = myDS.Tables[0].DefaultView;
+            
+        }
+
+        public void filterByDate(string date, DataGrid dg)
+        {
+            DataSet myDS = mySQL.selectInvoiceWithDate(date);
+            dg.DataContext = myDS.Tables[0].DefaultView;
+        }
+
+        public void filterByTotalCharges(string totCharges, DataGrid dg)
+        {
+            DataSet myDS = mySQL.selectInvoiceWithTotalCharges(totCharges);
+            dg.DataContext = myDS.Tables[0].DefaultView;
         }
     }
 }
