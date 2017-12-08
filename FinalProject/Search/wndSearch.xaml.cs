@@ -70,7 +70,8 @@ namespace FinalProject.Search
             if (cBNum.SelectedIndex > -1)
             {
                 string value = cBNum.SelectedValue.ToString();
-                searchFunct.filterByNum(value, dGInvoices);
+                //searchFunct.filterByNum(value, dGInvoices, cBDate, cBCharge);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
             }
         }
         /// <summary>
@@ -84,7 +85,8 @@ namespace FinalProject.Search
             if (cBDate.SelectedIndex > -1)
             {
                 string value = cBDate.SelectedValue.ToString();
-                searchFunct.filterByDate(value, dGInvoices);
+                //searchFunct.filterByDate(value, dGInvoices, cBNum, cBCharge);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
             }
         }
         /// <summary>
@@ -98,7 +100,8 @@ namespace FinalProject.Search
             if (cBCharge.SelectedIndex > -1)
             {
                 string value = cBCharge.SelectedValue.ToString();
-                searchFunct.filterByTotalCharges(value, dGInvoices);
+                //searchFunct.filterByTotalCharges(value, dGInvoices, cBNum, cBDate);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
             }
         }
         /// <summary>
@@ -113,7 +116,9 @@ namespace FinalProject.Search
             //and the search window will close and the main window will open
             if (dGInvoices.SelectedCells.Count != 0)
             {
-                //int test = dGInvoices.SelectedIndex;
+
+                string num = searchFunct.findInvoiceNumber(dGInvoices, cBNum, cBCharge, cBDate);
+                selectedNum = num;
                 this.Hide();
             }
             
