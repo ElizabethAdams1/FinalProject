@@ -18,9 +18,9 @@
                 <GradientStop Color="#FF7C7C7C" Offset="0.191"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox x:Name="txbItemDesc" HorizontalAlignment="Left" Height="33" Margin="27,171,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="303"/>
-        <TextBox x:Name="txbItemCode" HorizontalAlignment="Left" Height="33" Margin="27,111,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="303"/>
-        <TextBox x:Name="txbCost" HorizontalAlignment="Left" Height="33" Margin="27,233,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="303"/>
+        <TextBox x:Name="txbItemDesc" HorizontalAlignment="Left" Height="33" Margin="27,171,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303"/>
+        <TextBox x:Name="txbItemCode" HorizontalAlignment="Left" Height="33" Margin="27,111,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303"/>
+        <TextBox x:Name="txbCost" HorizontalAlignment="Left" Height="33" Margin="27,233,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303"/>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Height="37" Margin="27,323,0,0" VerticalAlignment="Top" Width="91" Click="btnSave_Click"/>
         <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Height="37" Margin="598,323,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click"/>
         <Label x:Name="label" Content="Edit Item" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="#FFFDFBFB" Height="58" Width="152"/>

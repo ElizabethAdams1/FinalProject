@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using FinalProject.DataClasses;
 
 namespace FinalProject
 {
@@ -37,14 +38,13 @@ namespace FinalProject
             grdItems.SelectionMode = DataGridSelectionMode.Single;
         }
 
-        private IList<clsItems> AutoFillDataGrid()
+        private IList<ItemDescData> AutoFillDataGrid()
         {
             /*
              *call business logic for retrieving data from the invoices database.
              */
             clsEditSQL es = new clsEditSQL();
-            DataSet ds;
-            IList<clsItems> items = new List<clsItems>();
+            IList<ItemDescData> items = new List<ItemDescData>();
             items.Clear();
             items = es.pullItemsTable();
             //grdItems.ItemsSource = ds.DefaultViewManager;
@@ -80,11 +80,11 @@ namespace FinalProject
         private void grdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid gd = (DataGrid)sender;
-            clsItems row_selected = gd.SelectedItem as clsItems;
+            ItemDescData row_selected = gd.SelectedItem as ItemDescData;
             if(row_selected != null)
             {
-                txbItemCode.Text = row_selected.Item_Code.ToString();
-                txbItemDesc.Text = row_selected.Item_Desc.ToString();
+                txbItemCode.Text = row_selected.ItemCode.ToString();
+                txbItemDesc.Text = row_selected.ItemDesc.ToString();
                 txbCost.Text = row_selected.Cost.ToString();
             }
         }

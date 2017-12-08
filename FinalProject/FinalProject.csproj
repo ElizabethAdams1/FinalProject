@@ -57,6 +57,9 @@
     </ApplicationDefinition>
     <Compile Include="clsDataAccess.cs" />
     <Compile Include="clsItems.cs" />
+    <Compile Include="DataClasses\Invoices.cs" />
+    <Compile Include="DataClasses\ItemDesc.cs" />
+    <Compile Include="DataClasses\LineItems.cs" />
     <Compile Include="Items\clsEditSQL.cs" />
     <Compile Include="Main\clsMainFunctions.cs" />
     <Compile Include="Main\clsMainSQL.cs" />

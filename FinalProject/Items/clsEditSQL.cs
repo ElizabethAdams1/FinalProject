@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using FinalProject.DataClasses;
 
 /// <summary>
 /// Class used to access the database.
@@ -31,9 +32,9 @@ public class clsEditSQL
         }
     }
 
-    public IList<clsItems> pullItemsTable()
+    public IList<ItemDescData> pullItemsTable()
     {
-        List<clsItems> items = new List<clsItems>();
+        List<ItemDescData> items = new List<ItemDescData>();
         DataSet ds;
         items.Clear();
 
@@ -47,9 +48,9 @@ public class clsEditSQL
             ds = da.ExecuteSQLStatement(table, ref recordCount);
             for (int i = 0; i < recordCount; i++)
             {
-                clsItems item = new clsItems();
-                item.Item_Code = ds.Tables[0].Rows[i][0].ToString();
-                item.Item_Desc = ds.Tables[0].Rows[i][1].ToString();
+                ItemDescData item = new ItemDescData();
+                item.ItemCode = ds.Tables[0].Rows[i][0].ToString();
+                item.ItemDesc = ds.Tables[0].Rows[i][1].ToString();
                 item.Cost = Convert.ToDecimal(ds.Tables[0].Rows[i][2].ToString());
                 items.Add(item);
             }
