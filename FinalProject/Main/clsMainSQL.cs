@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Reflection;
-using FinalProject.DataClasses;
-using FinalProject.Main;
 
 
 
@@ -93,9 +91,6 @@ namespace FinalProject.Main
             try
             {
                 int iRet = 0;
-                string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + invoiceNum + " AND LineItemNum = " + lineItemNum ;
-                iRet = db.ExecuteNonQuery(sSQL);
-                //return;
             }
             catch (Exception ex)
             {
@@ -123,12 +118,6 @@ namespace FinalProject.Main
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-        /// <summary>
-        /// method to add invoice to db
-        /// </summary>
-        /// <param name="totalCharge">user entered total charge</param>
-        /// <param name="invoiceDate">user entered date of invoice</param>
-        public void AddInvoice(double totalCharge, DateTime invoiceDate)
         {
             try
             {
