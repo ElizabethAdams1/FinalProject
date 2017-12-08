@@ -47,12 +47,17 @@ namespace FinalProject.Search
                 selectedId = value;
             }
         }
+        clsSearchFunctions searchFunct = new clsSearchFunctions();
         /// <summary>
         /// constructor
         /// </summary>
         public wndSearch()
         {
             InitializeComponent();
+            searchFunct.fillInvoiceDates(cBDate);
+            searchFunct.fillInvoiceTotalCharges(cBCharge);
+            searchFunct.fillInvoiceNumbers(cBNum);
+            searchFunct.fillInvoices(dGInvoices);
         }
         /// <summary>
         /// When the Number selection changes
