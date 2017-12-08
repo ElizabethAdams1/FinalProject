@@ -32,27 +32,32 @@ namespace FinalProject.Search
         /// <summary>
         /// selectedID for main
         /// </summary>
-        string selectedId;
+        string selectedNum;
         /// <summary>
         /// property for selectedid
         /// </summary>
-        public string SelectedId
+        public string SelectedNum
         {
             get
             {
-                return selectedId;
+                return selectedNum;
             }
             set
             {
-                selectedId = value;
+                selectedNum = value;
             }
         }
+        clsSearchFunctions searchFunct = new clsSearchFunctions();
         /// <summary>
         /// constructor
         /// </summary>
         public wndSearch()
         {
             InitializeComponent();
+            searchFunct.fillInvoiceDates(cBDate);
+            searchFunct.fillInvoiceTotalCharges(cBCharge);
+            searchFunct.fillInvoiceNumbers(cBNum);
+            searchFunct.fillInvoices(dGInvoices);
         }
         /// <summary>
         /// When the Number selection changes
@@ -62,6 +67,12 @@ namespace FinalProject.Search
         private void cBNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Filter based on new selection
+            if (cBNum.SelectedIndex > -1)
+            {
+                string value = cBNum.SelectedValue.ToString();
+                //searchFunct.filterByNum(value, dGInvoices, cBDate, cBCharge);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+            }
         }
         /// <summary>
         /// When the date selection changes
@@ -71,6 +82,12 @@ namespace FinalProject.Search
         private void cBDate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //filter based on new selection
+            if (cBDate.SelectedIndex > -1)
+            {
+                string value = cBDate.SelectedValue.ToString();
+                //searchFunct.filterByDate(value, dGInvoices, cBNum, cBCharge);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+            }
         }
         /// <summary>
         /// When the total charge selection changes
@@ -80,6 +97,12 @@ namespace FinalProject.Search
         private void cBCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //filter based on new selection
+            if (cBCharge.SelectedIndex > -1)
+            {
+                string value = cBCharge.SelectedValue.ToString();
+                //searchFunct.filterByTotalCharges(value, dGInvoices, cBNum, cBDate);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+            }
         }
         /// <summary>
         /// When the select button is selected
@@ -91,7 +114,14 @@ namespace FinalProject.Search
             //the selected invoice id needs to be set to a variable in the search window,
             //the main window will access this data via the property SelectedId,
             //and the search window will close and the main window will open
-            this.Hide();
+            if (dGInvoices.SelectedCells.Count != 0)
+            {
+
+                string num = searchFunct.findInvoiceNumber(dGInvoices, cBNum, cBCharge, cBDate);
+                selectedNum = num;
+                this.Hide();
+            }
+            
         }
         /// <summary>
         /// when the cancel button is selected
@@ -102,6 +132,10 @@ namespace FinalProject.Search
         {
             //closes the search window and opens the main window
             //should not perform any of the same actions select would, setting selectedId, etc.
+            cBCharge.SelectedIndex = -1;
+            cBNum.SelectedIndex = -1;
+            cBDate.SelectedIndex = -1;
+            searchFunct.fillInvoices(dGInvoices);
             this.Hide();
         }
         /// <summary>
@@ -112,6 +146,13 @@ namespace FinalProject.Search
         private void clear_Click(object sender, RoutedEventArgs e)
         {
             //clears all selections on dropdowns, and set page to default
+            //cBCharge.
+
+            //to reset selected value
+            cBCharge.SelectedIndex = -1;
+            cBNum.SelectedIndex = -1;
+            cBDate.SelectedIndex = -1;
+            searchFunct.fillInvoices(dGInvoices);
         }
     }
 }
