@@ -56,18 +56,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="clsDataAccess.cs" />
+    <Compile Include="DataClasses\ItemDesc.cs" />
+    <Compile Include="DataClasses\LineItems.cs" />
+    <Compile Include="Items\clsEditSQL.cs" />
+    <Compile Include="Main\clsMainFunctions.cs" />
+    <Compile Include="Main\clsMainSQL.cs" />
+    <Compile Include="DataClasses\Invoices.cs" />
     <Compile Include="Search\clsSearchFunctions.cs" />
     <Compile Include="Search\clsSearchSQL.cs" />
     <Compile Include="Search\wndSearch.xaml.cs">
       <DependentUpon>wndSearch.xaml</DependentUpon>
     </Compile>
-    
     <Page Include="Items\EditPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Main\MainWindow.xaml">
-
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -75,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessLogic.cs" />
+    <Compile Include="Items\BusinessLogic.cs" />
     <Compile Include="Items\EditPage.xaml.cs">
       <DependentUpon>EditPage.xaml</DependentUpon>
     </Compile>
@@ -115,7 +119,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Invoice.mdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
