@@ -32,6 +32,10 @@ namespace FinalProject
         {
             this.Hide();
             wndSearchForm.ShowDialog();
+            if (wndSearchForm.SelectedNum != null)
+            {
+                txbInvNum.Text = wndSearchForm.SelectedNum;
+            }
             this.Show();
 
         }
