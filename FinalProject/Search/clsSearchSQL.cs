@@ -122,6 +122,70 @@ namespace FinalProject.Search
             }
         }
 
+        public DataSet filterByNumCharge(string num, string charge)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE TotalCharge =" + charge + " AND InvoiceNum = " + num;
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+        public DataSet filterByDateCharge(string date, string charge)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE TotalCharge =" + charge + " AND InvoiceDate = #" + date + "#";
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public DataSet filterByDateNum(string date, string num)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE InvoiceNum =" + num + " AND InvoiceDate = #" + date + "#";
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public DataSet filterByDateNumCharge(string date, string num, string charge)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE InvoiceNum =" + num + " AND InvoiceDate = #" + date + "#" + " AND TotalCharge =" + charge;
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+
         public DataSet returnAllInvoices()
         {
             try
