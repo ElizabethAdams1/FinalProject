@@ -281,7 +281,29 @@ namespace FinalProject.Main
 
         }
 
+        public DataSet TotalInvoiceSumAsDataSet(int invoiceNum)
+        {
+            try
+            {
+                int iRetVal = 0;
+                clsDataAccess DataAccess = new clsDataAccess();
 
+                DataSet data = DataAccess.ExecuteSQLStatement("SELECT Invoices.InvoiceNum, ItemDesc.ItemDesc, LineItems.LineItemNum, ItemDesc.Cost FROM ((Invoices INNER JOIN LineItems ON Invoices.InvoiceNum = LineItems.InvoiceNum) INNER JOIN ItemDesc ON LineItems.ItemCode = ItemDesc.ItemCode) WHERE Invoices.InvoiceNum = " + invoiceNum + ";", ref iRetVal);
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+            finally
+            {
+                //This code will always execute
+
+            }
+
+
+        }
 
 
         /// <summary>
