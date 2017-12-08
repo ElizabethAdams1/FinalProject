@@ -32,19 +32,19 @@ namespace FinalProject.Search
         /// <summary>
         /// selectedID for main
         /// </summary>
-        string selectedId;
+        string selectedNum;
         /// <summary>
         /// property for selectedid
         /// </summary>
-        public string SelectedId
+        public string SelectedNum
         {
             get
             {
-                return selectedId;
+                return selectedNum;
             }
             set
             {
-                selectedId = value;
+                selectedNum = value;
             }
         }
         clsSearchFunctions searchFunct = new clsSearchFunctions();
@@ -113,7 +113,7 @@ namespace FinalProject.Search
             //and the search window will close and the main window will open
             if (dGInvoices.SelectedCells.Count != 0)
             {
-                int test = dGInvoices.SelectedIndex;
+                //int test = dGInvoices.SelectedIndex;
                 this.Hide();
             }
             
