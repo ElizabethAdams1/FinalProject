@@ -42,7 +42,7 @@ namespace FinalProject.Search
             try { 
             DataSet myDS;
             int iRet = 0;
-            string sSQL = "SELECT InvoiceDate FROM Invoices";
+            string sSQL = "SELECT DISTINCT InvoiceDate FROM Invoices";
             myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
             return myDS;
             }
@@ -90,5 +90,53 @@ namespace FinalProject.Search
             }
         }
 
+        public DataSet selectInvoiceWithDate(string date)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "#";
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public DataSet selectInvoiceWithTotalCharges(string totCharge)
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices WHERE TotalCharge =" +totCharge;
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public DataSet returnAllInvoices()
+        {
+            try
+            {
+                DataSet myDS;
+                int iRet = 0;
+                string sSQL = "SELECT * FROM Invoices";
+                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
+                return myDS;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
     }
 }
