@@ -32,19 +32,19 @@ namespace FinalProject.Search
         /// <summary>
         /// selectedID for main
         /// </summary>
-        string selectedId;
+        string selectedNum;
         /// <summary>
         /// property for selectedid
         /// </summary>
-        public string SelectedId
+        public string SelectedNum
         {
             get
             {
-                return selectedId;
+                return selectedNum;
             }
             set
             {
-                selectedId = value;
+                selectedNum = value;
             }
         }
         clsSearchFunctions searchFunct = new clsSearchFunctions();
@@ -67,10 +67,11 @@ namespace FinalProject.Search
         private void cBNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Filter based on new selection
-            if (cBNum.SelectedIndex > -1)
+            if (cBNum.SelectedIndex > -1 && cBNum.SelectedValue != null)
             {
                 string value = cBNum.SelectedValue.ToString();
-                searchFunct.filterByNum(value, dGInvoices);
+                //searchFunct.filterByNum(value, dGInvoices, cBDate, cBCharge);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
             }
         }
         /// <summary>
@@ -81,10 +82,11 @@ namespace FinalProject.Search
         private void cBDate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //filter based on new selection
-            if (cBDate.SelectedIndex > -1)
+            if (cBDate.SelectedIndex > -1 && cBDate.SelectedValue != null)
             {
                 string value = cBDate.SelectedValue.ToString();
-                searchFunct.filterByDate(value, dGInvoices);
+                //searchFunct.filterByDate(value, dGInvoices, cBNum, cBCharge);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
             }
         }
         /// <summary>
@@ -95,10 +97,11 @@ namespace FinalProject.Search
         private void cBCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //filter based on new selection
-            if (cBCharge.SelectedIndex > -1)
+            if (cBCharge.SelectedIndex > -1 && cBCharge.SelectedValue != null)
             {
                 string value = cBCharge.SelectedValue.ToString();
-                searchFunct.filterByTotalCharges(value, dGInvoices);
+                //searchFunct.filterByTotalCharges(value, dGInvoices, cBNum, cBDate);
+                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
             }
         }
         /// <summary>
@@ -113,7 +116,9 @@ namespace FinalProject.Search
             //and the search window will close and the main window will open
             if (dGInvoices.SelectedCells.Count != 0)
             {
-                int test = dGInvoices.SelectedIndex;
+
+                string num = searchFunct.findInvoiceNumber(dGInvoices, cBNum, cBCharge, cBDate);
+                selectedNum = num;
                 this.Hide();
             }
             
@@ -130,6 +135,9 @@ namespace FinalProject.Search
             cBCharge.SelectedIndex = -1;
             cBNum.SelectedIndex = -1;
             cBDate.SelectedIndex = -1;
+            searchFunct.fillInvoiceDates(cBDate);
+            searchFunct.fillInvoiceNumbers(cBNum);
+            searchFunct.fillInvoiceTotalCharges(cBCharge);
             searchFunct.fillInvoices(dGInvoices);
             this.Hide();
         }
@@ -147,6 +155,9 @@ namespace FinalProject.Search
             cBCharge.SelectedIndex = -1;
             cBNum.SelectedIndex = -1;
             cBDate.SelectedIndex = -1;
+            searchFunct.fillInvoiceDates(cBDate);
+            searchFunct.fillInvoiceNumbers(cBNum);
+            searchFunct.fillInvoiceTotalCharges(cBCharge);
             searchFunct.fillInvoices(dGInvoices);
         }
     }
