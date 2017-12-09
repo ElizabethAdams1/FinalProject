@@ -14,22 +14,38 @@ using FinalProject.DataClasses;
 public class clsEditSQL 
 {
 
-    public void updateItems(string itemcode, string itemDesc, string cost)
+    public bool updateItems(string itemcode, string itemdesc, string cost)
     {
-        decimal decCost = Convert.ToDecimal(cost);
-        string result = string.Empty;
+        bool result = false;
+        decimal decCost = decimal.Parse(cost, System.Globalization.NumberStyles.Currency);
+        int iRet = 0;
         //*Update data in the ItemDesc table:
-        string saveItem = "UPDATE ItemDesc SET ItemCode = '" + itemcode + "', ItemDesc = '" + itemDesc + "', Cost = " + decCost + " WHERE ItemCode = '" + itemcode + "'";
+        string saveItem = "UPDATE ItemDesc SET ItemDesc = '" + itemdesc + "', Cost = " + decCost + " WHERE ItemCode = '" + itemcode + "'";
 
         try
         {
             clsDataAccess da = new clsDataAccess();
-            result = da.ExecuteScalarSQL(saveItem);
+            iRet = da.ExecuteNonQuery(saveItem);
+            if(iRet == 0)
+            {
+                string insertItem = "INSERT INTO ItemDesc (Itemcode, ItemDesc, Cost) Values ('"+itemcode+"','"+itemdesc+"',"+decCost+")";
+                iRet = da.ExecuteNonQuery(insertItem);
+                if(iRet != 0)
+                {
+                    result = true;
+                }
+            }
+            else
+            {
+                result = true;
+            }
         }
         catch
         {
 
         }
+
+        return result;
     }
 
     public IList<ItemDescData> pullItemsTable()

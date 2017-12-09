@@ -30,11 +30,11 @@ namespace FinalProject
         private void populateDataGrid()
         {
             grdItems.ItemsSource = AutoFillDataGrid();
-            grdItems.AutoGenerateColumns = true;
-            grdItems.ColumnWidth = 100;
-            grdItems.Background = new SolidColorBrush(Colors.LightGray);
-            grdItems.AlternatingRowBackground = new SolidColorBrush(Colors.LightBlue);
-            grdItems.RowBackground = new SolidColorBrush(Colors.LightGoldenrodYellow);
+            grdItems.AutoGenerateColumns = false;
+            //grdItems.ColumnWidth = 100;
+            //grdItems.Background = new SolidColorBrush(Colors.LightGray);
+            //grdItems.AlternatingRowBackground = new SolidColorBrush(Colors.LightBlue);
+            //grdItems.RowBackground = new SolidColorBrush(Colors.LightGoldenrodYellow);
             grdItems.SelectionMode = DataGridSelectionMode.Single;
         }
 
@@ -55,18 +55,20 @@ namespace FinalProject
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            bool sqlRel = false;
             MessageBoxResult result = MessageBox.Show("Please confirm the save operation!", "Edit Item Confirmation", MessageBoxButton.OKCancel);
             switch (result)
             {
                 case MessageBoxResult.OK:
                     clsEditSQL es = new clsEditSQL();
-                    es.updateItems(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
+                    sqlRel = es.updateItems(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
                     break;
                 case MessageBoxResult.Cancel:
-                    MainWindow mw = new MainWindow();
-                    mw.ShowDialog();
-                    this.Close();
                     break;
+            }
+            if (sqlRel == true)
+            {
+                populateDataGrid();
             }
         }
 
@@ -99,7 +101,7 @@ namespace FinalProject
                 txbCost.Text = "";
                 txbItemCode.Text = "";
                 txbItemDesc.Text = "";
-                AutoFillDataGrid();
+                populateDataGrid();
             }
         }
     }
