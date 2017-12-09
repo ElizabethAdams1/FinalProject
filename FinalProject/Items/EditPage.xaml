@@ -18,11 +18,11 @@
                 <GradientStop Color="#FF5E83C5" Offset="0.155"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox x:Name="txbItemDesc" HorizontalAlignment="Left" Height="33" Margin="27,171,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303"/>
-        <TextBox x:Name="txbItemCode" HorizontalAlignment="Left" Height="33" Margin="27,111,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303"/>
-        <TextBox x:Name="txbCost" HorizontalAlignment="Left" Height="33" Margin="27,233,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303"/>
-        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Height="37" Margin="27,323,0,0" VerticalAlignment="Top" Width="91" Click="btnSave_Click"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Height="37" Margin="598,323,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click"/>
+        <TextBox x:Name="txbItemDesc" HorizontalAlignment="Left" Height="33" Margin="27,171,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303" KeyboardNavigation.TabIndex="1"/>
+        <TextBox x:Name="txbItemCode" HorizontalAlignment="Left" Height="33" Margin="27,111,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303" KeyboardNavigation.TabIndex="0"/>
+        <TextBox x:Name="txbCost" HorizontalAlignment="Left" Height="33" Margin="27,233,0,0" Padding="5" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="303" KeyboardNavigation.TabIndex="2"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Height="37" Margin="27,323,0,0" VerticalAlignment="Top" Width="91" Click="btnSave_Click" KeyboardNavigation.TabIndex="3"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Height="37" Margin="598,323,0,0" VerticalAlignment="Top" Width="91" Click="btnCancel_Click" KeyboardNavigation.TabIndex="4"/>
         <Label x:Name="label" Content="Edit Item" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" FontSize="36" Foreground="#FFFDFBFB" Height="58" Width="152"/>
         <Label x:Name="label2" Content="Item Desc" HorizontalAlignment="Left" Margin="21,148,0,0" VerticalAlignment="Top" Height="26" Width="62"/>
         <Label x:Name="label3" Content="Item Code" HorizontalAlignment="Left" Margin="22,89,0,0" VerticalAlignment="Top" Height="26" Width="65"/>
@@ -50,7 +50,7 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="255,323,0,0" VerticalAlignment="Top" Width="75" Height="37" Click="btnDelete_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="255,323,0,0" VerticalAlignment="Top" Width="75" Height="37" Click="btnDelete_Click" KeyboardNavigation.TabIndex="5"/>
 
     </Grid>
 </Window>
