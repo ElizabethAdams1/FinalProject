@@ -98,18 +98,18 @@ namespace FinalProject.DataClasses
         }
 
 
-        public string SaveItemToDB()
-        {
-            int iRetVal = 0;
+        //public string SaveItemToDB()
+        //{
+        //    int iRetVal = 0;
 
-            clsDataAccess DataAccess = new clsDataAccess();
+        //    clsDataAccess DataAccess = new clsDataAccess();
 
-            string SQL = "INSERT INTO ItemDesc (ItemCode, ItemDesc, Cost) VALUES('" + item_Code + "', '" + item_Desc + "', " + cost + ")";
+        //    string SQL = "INSERT INTO ItemDesc (ItemCode, ItemDesc, Cost) VALUES('" + item_Code + "', '" + item_Desc + "', " + cost + ")";
 
-            iRetVal = DataAccess.ExecuteNonQuery(SQL);
+        //    iRetVal = DataAccess.ExecuteNonQuery(SQL);
 
-            return ItemCode;
-        }
+        //    return ItemCode;
+        //}
 
         public override string ToString()
         {
