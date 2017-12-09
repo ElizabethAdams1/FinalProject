@@ -1,111 +1,155 @@
-﻿using FinalProject;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Reflection;
-using System.Windows;
-using FinalProject.DataClasses;
+
+
+//This is the DataAccess class provided for us that you said we could use.
+
+//Credits: Shawn Cowder
 
 /// <summary>
 /// Class used to access the database.
 /// </summary>
 public class clsEditSQL 
 {
+    /// <summary>
+    /// Connection string to the database.
+    /// </summary>
+    private string sConnectionString;
 
-    public void updateItems(string itemcode, string itemDesc, string cost)
+    /// <summary>
+    /// Constructor that sets the connection string to the database
+    /// </summary>
+    public clsEditSQL()
     {
-        decimal decCost = Convert.ToDecimal(cost);
-        string result = string.Empty;
-        //*Update data in the ItemDesc table:
-        string saveItem = "UPDATE ItemDesc SET ItemCode = '" + itemcode + "', ItemDesc = '" + itemDesc + "', Cost = " + decCost + " WHERE ItemCode = '" + itemcode + "'";
+        sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\invoices.mdb";
+    }
 
+    /// <summary>
+    /// This method takes an SQL statment that is passed in and executes it.  The resulting values
+    /// are returned in a DataSet.  The number of rows returned from the query will be put into
+    /// the reference parameter iRetVal.
+    /// </summary>
+    /// <param name="sSQL">The SQL statement to be executed.</param>
+    /// <param name="iRetVal">Reference parameter that returns the number of selected rows.</param>
+    /// <returns>Returns a DataSet that contains the data from the SQL statement.</returns>
+    public DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
+    {
         try
         {
-            clsDataAccess da = new clsDataAccess();
-            result = da.ExecuteScalarSQL(saveItem);
-        }
-        catch
-        {
+            //Create a new DataSet
+            DataSet ds = new DataSet();
 
+            using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+            {
+                using (OleDbDataAdapter adapter = new OleDbDataAdapter())
+                {
+
+                    //Open the connection to the database
+                    conn.Open();
+
+                    //Add the information for the SelectCommand using the SQL statement and the connection object
+                    adapter.SelectCommand = new OleDbCommand(sSQL, conn);
+                    adapter.SelectCommand.CommandTimeout = 0;
+
+                    //Fill up the DataSet with data
+                    adapter.Fill(ds);
+                }
+            }
+
+            //Set the number of values returned
+            iRetVal = ds.Tables[0].Rows.Count;
+
+            //return the DataSet
+            return ds;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
         }
     }
 
-    public IList<ItemDescData> pullItemsTable()
+    /// <summary>
+    /// This method takes an SQL statment that is passed in and executes it.  The resulting single 
+    /// value is returned.
+    /// </summary>
+    /// <param name="sSQL">The SQL statement to be executed.</param>
+    /// <returns>Returns a string from the scalar SQL statement.</returns>
+    public string ExecuteScalarSQL(string sSQL)
     {
-        List<ItemDescData> items = new List<ItemDescData>();
-        DataSet ds;
-        items.Clear();
-
         try
         {
-            clsDataAccess da = new clsDataAccess();
+            //Holds the return value
+            object obj;
 
-
-            String table = "SELECT * FROM ItemDesc";
-            int recordCount = 0;
-            ds = da.ExecuteSQLStatement(table, ref recordCount);
-            for (int i = 0; i < recordCount; i++)
+            using (OleDbConnection conn = new OleDbConnection(sConnectionString))
             {
-                ItemDescData item = new ItemDescData();
-                item.ItemCode = ds.Tables[0].Rows[i][0].ToString();
-                item.ItemDesc = ds.Tables[0].Rows[i][1].ToString();
-                item.Cost = Convert.ToDecimal(ds.Tables[0].Rows[i][2].ToString());
-                items.Add(item);
+                using (OleDbDataAdapter adapter = new OleDbDataAdapter())
+                {
+
+                    //Open the connection to the database
+                    conn.Open();
+
+                    //Add the information for the SelectCommand using the SQL statement and the connection object
+                    adapter.SelectCommand = new OleDbCommand(sSQL, conn);
+                    adapter.SelectCommand.CommandTimeout = 0;
+
+                    //Execute the scalar SQL statement
+                    obj = adapter.SelectCommand.ExecuteScalar();
+                }
+            }
+
+            //See if the object is null
+            if (obj == null)
+            {
+                //Return a blank
+                return "";
+            }
+            else
+            {
+                //Return the value
+                return obj.ToString();
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show("PullItemsTable: " + ex.Message);
+            throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
         }
-
-        return items;
-
     }
 
-    public bool DeleteItem(string itemcode)
+    /// <summary>
+    /// This method takes an SQL statment that is a non query and executes it.
+    /// </summary>
+    /// <param name="sSQL">The SQL statement to be executed.</param>
+    /// <returns>Returns the number of rows affected by the SQL statement.</returns>
+    public int ExecuteNonQuery(string sSQL)
     {
-        bool deleted = false;
-        DataSet ds = new DataSet();
-        //retrieve a random number for seating
         try
         {
-            //initializes clsDataAccess class
-            clsDataAccess da = new clsDataAccess();
-            //check to see if seat number is already used
-            String checkIfExists = "SELECT * FROM LineItems WHERE ItemCode = '" + itemcode + "'";
-            String deleteItem = "DELETE FROM ItemDesc WHERE ItemCode = '" + itemcode + "'";
-            int ret = 0;
-            int rowsAffected = 0;
-            string invoices = string.Empty;
-            //SQL executes checkIfExists and check the number of records 
-            ds = da.ExecuteSQLStatement(checkIfExists, ref ret);
-            //if ret equals 0 then the value available for assignment for new passenger
-            if (ret != 0)
-            {
-                for (int i = 0; i < ret; i++)
-                {
-                    invoices = invoices + ds.Tables[0].Rows[i][0].ToString() + ", ";
-                }
-                MessageBox.Show("Item '" + itemcode + "' was found in the following invoices " + invoices);
-            }
-            else
-            {
-                rowsAffected = da.ExecuteNonQuery(deleteItem);
-            }
-            if (rowsAffected != 0)
-            {
-                MessageBox.Show("Item has been deleted");
-                deleted = true;
-            }
-        }
-        catch (Exception e)
-        {
-            //Exception message
-            MessageBox.Show("checkAvailableSeat" + " " + e.Message);
-        }
+            //Number of rows affected
+            int iNumRows;
 
-        return deleted;
+            using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+            {
+                //Open the connection to the database
+                conn.Open();
+
+                //Add the information for the SelectCommand using the SQL statement and the connection object
+                OleDbCommand cmd = new OleDbCommand(sSQL, conn);
+                cmd.CommandTimeout = 0;
+
+                //Execute the non query SQL statement
+                iNumRows = cmd.ExecuteNonQuery();
+            }
+
+            //return the number of rows affected
+            return iNumRows;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+        }
     }
 }

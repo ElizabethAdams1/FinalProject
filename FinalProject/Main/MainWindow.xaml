@@ -24,7 +24,6 @@
         </Menu>
         <Label x:Name="lblInvoiceNum" Content="Invoice Number" HorizontalAlignment="Left" Margin="26,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.731,0.594" Height="26" Width="94"/>
         <TextBox x:Name="txbInvNum" HorizontalAlignment="Left" Height="23" Margin="125,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txbInvNum" HorizontalAlignment="Left" Height="23" Margin="125,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" Text="TBD"/>
         <Label x:Name="lblInvoiceDate" Content="Invoice Date:" HorizontalAlignment="Left" Margin="42,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.788,0.477" Height="26" Width="78"/>
         <TextBox x:Name="txbInvDate" HorizontalAlignment="Left" Height="23" Margin="125,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="lblSeectItems" Content="Select Item to Add to Invoice" HorizontalAlignment="Left" Margin="30,148,0,0" VerticalAlignment="Top" Height="26" Width="163"/>

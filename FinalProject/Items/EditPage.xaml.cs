@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
-using FinalProject.DataClasses;
 
 namespace FinalProject
 {
@@ -24,33 +23,18 @@ namespace FinalProject
         public EditPage()
         {
             InitializeComponent();
-            populateDataGrid(); ;
+            //AutoFillDataGrid();
         }
 
-        private void populateDataGrid()
-        {
-            grdItems.ItemsSource = AutoFillDataGrid();
-            grdItems.AutoGenerateColumns = true;
-            grdItems.ColumnWidth = 100;
-            grdItems.Background = new SolidColorBrush(Colors.LightGray);
-            grdItems.AlternatingRowBackground = new SolidColorBrush(Colors.LightBlue);
-            grdItems.RowBackground = new SolidColorBrush(Colors.LightGoldenrodYellow);
-            grdItems.SelectionMode = DataGridSelectionMode.Single;
-        }
-
-        private IList<ItemDescData> AutoFillDataGrid()
+        private void AutoFillDataGrid()
         {
             /*
              *call business logic for retrieving data from the invoices database.
              */
-            clsEditSQL es = new clsEditSQL();
-            IList<ItemDescData> items = new List<ItemDescData>();
-            items.Clear();
-            items = es.pullItemsTable();
-            //grdItems.ItemsSource = ds.DefaultViewManager;
-
-            return items;
-
+            BusinessLogic bl = new BusinessLogic();
+            DataSet ds = new DataSet();
+            ds = bl.pullTable("itemdesc");
+            grdItems.DataContext = ds;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -59,12 +43,13 @@ namespace FinalProject
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    clsEditSQL es = new clsEditSQL();
-                    es.updateItems(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
+                    //BusinessLogic bl = new BusinessLogic();
+                    //bl.updateSQL(txbItemCode.Text, txbItemDesc.Text, txbCost.Text);
+                    MessageBox.Show("Hello to you too!", "My App");
                     break;
                 case MessageBoxResult.Cancel:
                     MainWindow mw = new MainWindow();
-                    mw.ShowDialog();
+                    mw.Show();
                     this.Close();
                     break;
             }
@@ -80,27 +65,21 @@ namespace FinalProject
         private void grdItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid gd = (DataGrid)sender;
-            ItemDescData row_selected = gd.SelectedItem as ItemDescData;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
             if(row_selected != null)
             {
-                txbItemCode.Text = row_selected.ItemCode.ToString();
-                txbItemDesc.Text = row_selected.ItemDesc.ToString();
-                txbCost.Text = row_selected.Cost.ToString();
+                txbItemCode.Text = row_selected["Item Code"].ToString();
+                txbItemDesc.Text = row_selected["Item Description"].ToString();
+                txbCost.Text = row_selected["Cost"].ToString();
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            string itemcode = txbItemCode.Text;
-            clsEditSQL es = new clsEditSQL();
+            string itemcost = txbItemCode.Text;
+            BusinessLogic bl = new BusinessLogic();
             //If not found in existing invoices
-            if (es.DeleteItem(itemcode))
-            {
-                txbCost.Text = "";
-                txbItemCode.Text = "";
-                txbItemDesc.Text = "";
-                AutoFillDataGrid();
-            }
+            bl.DeleteItem(itemcost);
         }
     }
 }

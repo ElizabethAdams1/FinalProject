@@ -1,5 +1,4 @@
 using System;
-﻿using System;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;

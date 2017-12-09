@@ -21,6 +21,7 @@ namespace FinalProject.DataClasses
     /// <summary>
     /// holds data about singular inventory item
     /// </summary>
+    class ItemDescData
     {
         /// <summary>
         /// attributes for itemDesc data
