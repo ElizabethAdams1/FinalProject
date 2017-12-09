@@ -21,7 +21,7 @@ namespace FinalProject.DataClasses
     /// <summary>
     /// holds data about singular inventory item
     /// </summary>
-    class ItemDescData
+    public class ItemDescData
     {
         /// <summary>
         /// attributes for itemDesc data
@@ -87,6 +87,14 @@ namespace FinalProject.DataClasses
             item_Code = itemCode;
             item_Desc = itemDesc;
             cost = itemCost;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ItemDescData()
+        {
+
         }
 
 
