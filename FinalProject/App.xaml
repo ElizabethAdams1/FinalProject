@@ -5,6 +5,12 @@
              StartupUri="..\Main\MainWindow.xaml"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-         
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BureauBlue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>
