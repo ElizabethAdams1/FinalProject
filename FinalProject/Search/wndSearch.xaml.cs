@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -67,11 +68,18 @@ namespace FinalProject.Search
         private void cBNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //Filter based on new selection
-            if (cBNum.SelectedIndex > -1 && cBNum.SelectedValue != null)
+            try
             {
-                string value = cBNum.SelectedValue.ToString();
-                //searchFunct.filterByNum(value, dGInvoices, cBDate, cBCharge);
-                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+                if (cBNum.SelectedIndex > -1 && cBNum.SelectedValue != null)
+                {
+                    string value = cBNum.SelectedValue.ToString();
+                    //searchFunct.filterByNum(value, dGInvoices, cBDate, cBCharge);
+                    searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
         /// <summary>
@@ -82,11 +90,18 @@ namespace FinalProject.Search
         private void cBDate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //filter based on new selection
-            if (cBDate.SelectedIndex > -1 && cBDate.SelectedValue != null)
+            try
             {
-                string value = cBDate.SelectedValue.ToString();
-                //searchFunct.filterByDate(value, dGInvoices, cBNum, cBCharge);
-                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+                if (cBDate.SelectedIndex > -1 && cBDate.SelectedValue != null)
+                {
+                    string value = cBDate.SelectedValue.ToString();
+                    //searchFunct.filterByDate(value, dGInvoices, cBNum, cBCharge);
+                    searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
         /// <summary>
@@ -97,11 +112,18 @@ namespace FinalProject.Search
         private void cBCharge_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //filter based on new selection
-            if (cBCharge.SelectedIndex > -1 && cBCharge.SelectedValue != null)
+            try
             {
-                string value = cBCharge.SelectedValue.ToString();
-                //searchFunct.filterByTotalCharges(value, dGInvoices, cBNum, cBDate);
-                searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+                if (cBCharge.SelectedIndex > -1 && cBCharge.SelectedValue != null)
+                {
+                    string value = cBCharge.SelectedValue.ToString();
+                    //searchFunct.filterByTotalCharges(value, dGInvoices, cBNum, cBDate);
+                    searchFunct.filterData(dGInvoices, cBNum, cBDate, cBCharge);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
         /// <summary>
@@ -114,14 +136,21 @@ namespace FinalProject.Search
             //the selected invoice id needs to be set to a variable in the search window,
             //the main window will access this data via the property SelectedId,
             //and the search window will close and the main window will open
-            if (dGInvoices.SelectedCells.Count != 0)
+            try
             {
+                if (dGInvoices.SelectedCells.Count != 0)
+                {
 
-                string num = searchFunct.findInvoiceNumber(dGInvoices, cBNum, cBCharge, cBDate);
-                selectedNum = num;
-                this.Hide();
+                    string num = searchFunct.findInvoiceNumber(dGInvoices, cBNum, cBCharge, cBDate);
+                    selectedNum = num;
+                    this.Hide();
+                }
             }
-            
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+
         }
         /// <summary>
         /// when the cancel button is selected
@@ -132,14 +161,21 @@ namespace FinalProject.Search
         {
             //closes the search window and opens the main window
             //should not perform any of the same actions select would, setting selectedId, etc.
-            cBCharge.SelectedIndex = -1;
-            cBNum.SelectedIndex = -1;
-            cBDate.SelectedIndex = -1;
-            searchFunct.fillInvoiceDates(cBDate);
-            searchFunct.fillInvoiceNumbers(cBNum);
-            searchFunct.fillInvoiceTotalCharges(cBCharge);
-            searchFunct.fillInvoices(dGInvoices);
-            this.Hide();
+            try
+            {
+                cBCharge.SelectedIndex = -1;
+                cBNum.SelectedIndex = -1;
+                cBDate.SelectedIndex = -1;
+                searchFunct.fillInvoiceDates(cBDate);
+                searchFunct.fillInvoiceNumbers(cBNum);
+                searchFunct.fillInvoiceTotalCharges(cBCharge);
+                searchFunct.fillInvoices(dGInvoices);
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
         /// <summary>
         /// When the Clear Selection button is clicked
@@ -152,13 +188,38 @@ namespace FinalProject.Search
             //cBCharge.
 
             //to reset selected value
-            cBCharge.SelectedIndex = -1;
-            cBNum.SelectedIndex = -1;
-            cBDate.SelectedIndex = -1;
-            searchFunct.fillInvoiceDates(cBDate);
-            searchFunct.fillInvoiceNumbers(cBNum);
-            searchFunct.fillInvoiceTotalCharges(cBCharge);
-            searchFunct.fillInvoices(dGInvoices);
+            try
+            {
+                cBCharge.SelectedIndex = -1;
+                cBNum.SelectedIndex = -1;
+                cBDate.SelectedIndex = -1;
+                searchFunct.fillInvoiceDates(cBDate);
+                searchFunct.fillInvoiceNumbers(cBNum);
+                searchFunct.fillInvoiceTotalCharges(cBCharge);
+                searchFunct.fillInvoices(dGInvoices);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name, MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Handle Error method
+        /// </summary>
+        /// <param name="sClass"></param>
+        /// <param name="sMethod"></param>
+        /// <param name="sMessage"></param>
+        private void HandleError(string sClass, string sMethod, string sMessage)
+        {
+            try
+            {
+                MessageBox.Show(sClass + "." + sMethod + "->" + sMessage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error has occured: " + ex.Message);
+            }
         }
     }
 }
