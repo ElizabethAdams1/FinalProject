@@ -19,31 +19,12 @@ namespace FinalProject.Main
         /// </summary>
         clsDataAccess db = new clsDataAccess();
 
-        /// <summary>
-        /// Returns all the inventory Items in the Inventory table
-        /// </summary>
-        /// <returns>all items from inventory</returns>
-        //public DataSet allInventoryItems()
-        //{
-        //    try
-        //    {
-        //        DataSet myDS;
-        //        int iRet = 0;
-        //        string sSQL = "SELECT ItemDesc FROM ItemDesc";
-        //        myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
-        //        return myDS;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-        //    }
-        //}
 
         /// <summary>
         /// retrieves cost of specified item from db using ItemCode
         /// </summary>
-        /// <param name="itemCode"></param>
-        /// <returns>cost of item</returns>
+        /// <param name="itemCode">item code</param>
+        /// <returns>data set for cost of item</returns>
         public DataSet GetItemCost(string itemCode)
         {
             try
@@ -65,7 +46,7 @@ namespace FinalProject.Main
         /// Returns all data for one invoice id, given the invoice id
         /// </summary>
         /// <param name="invoiceNum"></param>
-        /// <returns></returns>
+        /// <returns>data set for invoices</returns>
         public DataSet SelectInvoiceData(string invoiceNum)
         {
             try
@@ -87,7 +68,6 @@ namespace FinalProject.Main
         /// </summary>
         /// <param name="lineItemNum">the line of the invoice to be deleted</param>
         /// <param name="invoiceNum">The number of the invoice being referenced</param>
-        /// <returns></returns>
         public void DeleteInvoiceItem(int lineItemNum, int invoiceNum)
         {
             try
@@ -95,7 +75,6 @@ namespace FinalProject.Main
                 int iRet = 0;
                 string sSQL = "DELETE FROM LineItems WHERE InvoiceNum = " + invoiceNum + " AND LineItemNum = " + lineItemNum ;
                 iRet = db.ExecuteNonQuery(sSQL);
-                //return;
             }
             catch (Exception ex)
             {
@@ -107,22 +86,23 @@ namespace FinalProject.Main
         /// adds an atem to LineItem table
         /// </summary>
         /// <param name="invoiceNum">line number in invoice of item being added</param>
+        /// <param name="lineItemNum"></param>
         /// <param name="itemCode">invoice number being added to</param>
-        public DataSet addInvoiceItem(int invoiceNum, string itemCode)
+        public int AddInvoiceItem(int invoiceNum, int lineItemNum, string itemCode)
         {
             try
             {
-                DataSet myDS;
                 int iRet = 0;
-                string sSQL = "INSERT INTO LineItems (InvoiceNum, ItemCode) VALUES (" + invoiceNum + ", " + itemCode + ")";
-                myDS = db.ExecuteSQLStatement(sSQL, ref iRet);
-                return myDS;
+                string sSQL = "INSERT INTO LineItems (InvoiceNum, lineItemNum, ItemCode) VALUES (" + invoiceNum + ", " + lineItemNum + ", '" + itemCode + "')";
+                iRet = db.ExecuteNonQuery(sSQL);
+                return iRet;
             }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
         /// method to add invoice to db
         /// </summary>
@@ -132,7 +112,6 @@ namespace FinalProject.Main
         {
             try
             {
-                //DataSet myDS;
                 int iRet = 0;
                 string sSQL = "INSERT into Invoices (TotalCharge, InvoiceDate) VALUES (" + totalCharge + ", '" + invoiceDate.ToShortDateString() + "')";
                 iRet = db.ExecuteNonQuery(sSQL);
@@ -147,7 +126,7 @@ namespace FinalProject.Main
         /// <summary>
         /// method to delete invoice from db
         /// </summary>
-        /// <param name="invoiceNum"></param>
+        /// <param name="invoiceNum">invoice number to delete from dbparam>
         public void DelInvoice(int invoiceNum)
         {
             try
@@ -229,7 +208,11 @@ namespace FinalProject.Main
 
         }
 
-
+        /// <summary>
+        /// method to load invoice details as a data set
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <returns>data set</returns>
         public DataSet LoadInvoiceDetailsAsDataSet(int invoiceNum)
         {
             try
@@ -253,7 +236,11 @@ namespace FinalProject.Main
             }
 
         }
-
+        /// <summary>
+        /// method to load all invoice details into an array 
+        /// </summary>
+        /// <param name="invoiceNum">invoice number</param>
+        /// <returns>array</returns>
         public InvoiceDetailsData[] LoadInvoiceDetails(int invoiceNum)
         {
             try
@@ -281,6 +268,11 @@ namespace FinalProject.Main
 
         }
 
+        /// <summary>
+        /// data set of invoice information so that costs can be totaled. Tables are joined
+        /// </summary>
+        /// <param name="invoiceNum">invoice number</param>
+        /// <returns>data set</returns>
         public DataSet TotalInvoiceSumAsDataSet(int invoiceNum)
         {
             try
@@ -337,7 +329,10 @@ namespace FinalProject.Main
             }
 
         }
-
+        /// <summary>
+        /// data set of all intventory items available 
+        /// </summary>
+        /// <returns>data set</returns>
          public DataSet LoadAllInventoryItemsAsDataSet()
         {
             try
@@ -392,6 +387,12 @@ namespace FinalProject.Main
 
         }
 
+        /// <summary>
+        /// used to update the invoice total when items are added or deleted from it
+        /// </summary>
+        /// <param name="invoiceNum">invoice number</param>
+        /// <param name="invoiceTotal">invoice total</param>
+        /// <returns>iRetVal</returns>
         public int UpdateInvoiceTotal(int invoiceNum, Decimal invoiceTotal)
         {
             try
@@ -415,6 +416,3 @@ namespace FinalProject.Main
         }
     }
 }
-//UPDATE table_name
-//SET column1 = value1, column2 = value2, ...
-//WHERE condition;
